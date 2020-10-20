@@ -1,0 +1,70 @@
+from __future__ import annotations
+
+from typing import Optional, TYPE_CHECKING, Tuple
+from actions import Action, EscapeAction
+from enum import auto, Enum
+from highlight import Highlight
+
+import tcod.event
+
+if TYPE_CHECKING:
+    from engine import Engine
+
+class EventHandler(tcod.event.EventDispatch[Action]):
+    def __init__(self, engine: Engine, context_pointer):
+        self.engine = engine
+        self.context_pointer = context_pointer
+
+    def handle_events(self, context: tcod.context.Context) -> None:
+        for event in tcod.event.get():
+            context.convert_event(event)
+            self.dispatch(event)
+            pass
+
+    def ev_quit(self, event: tcod.event.Quit) -> None:
+        raise SystemExit()
+
+    def on_render(self, root_console: tcod.Console,  ui_console: tcod.Console) -> None:
+        self.engine.render(root_console, ui_console)
+
+class MainGameEventHandler(EventHandler):
+    def handle_events(self, context: tcod.context.Context) -> None:
+        if context.sdl_window_p != self.context_pointer:
+            return
+
+        self.current_context = context
+        for event in tcod.event.get():
+            context.convert_event(event)
+            actions = self.dispatch(event)
+            
+            if actions is None:
+                continue
+
+            for action in actions:
+                action.perform()
+
+    def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[list(Action)]:
+        actions = []
+
+        key = event.sym
+
+        if key == tcod.event.K_ESCAPE:
+            actions.append(EscapeAction(self.engine))
+
+        # No valid key was pressed
+        return actions
+
+    def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
+        self.engine.mouse_location = self.current_context.pixel_to_tile(event.pixel.x, event.pixel.y)
+        self.engine.remote_ui.mousemove(self.engine.mouse_location[0], self.engine.mouse_location[1])
+
+    def ev_mousebuttondown(self, event: tcod.event.MouseButtonDown) -> Optional[list(Action)]:
+        actions = []
+
+        self.is_mouse_down = True
+        self.mouse_down_location = self.engine.mouse_location
+
+        self.engine.remote_ui.mousedown(self.engine.mouse_location[0], self.engine.mouse_location[1])
+
+        return actions
+
