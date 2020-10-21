@@ -1,18 +1,19 @@
+from sections.section import Section
+
 import numpy as np
 import tile_types
 import tcod
 import xp_loader
 import gzip
+from ui import RemoteUI
 
-remote_xp_file = 'remote.xp'
+remote_xp_file = 'images/remote.xp'
 num_digits = 3
 
-class Remote:
+class Remote(Section):
 
-    def __init__(self, engine, width, height):
-        self.engine = engine
-        self.width = width
-        self.height = height
+    def __init__(self, engine, x,y,width, height):
+        super().__init__(engine, x, y, width, height)
 
         xp_file = gzip.open(remote_xp_file)
         raw_data = xp_file.read()
@@ -30,8 +31,7 @@ class Remote:
         self.num_digits = 0
         self.selected_number = 0
 
-    def render(self, console):
-         console.tiles_rgb[0:self.width, 0: self.height] = self.tiles["graphic"]
+        self.ui = RemoteUI(self, x,y,self.tiles["graphic"])
 
     def add_number(self, number : int):
         if self.num_digits == 0:

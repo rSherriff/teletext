@@ -8,10 +8,13 @@ from highlight import Highlight
 from actions import EnterRemoteNumber, ClearRemote, ActivateRemote
 
 class UI:
-    def __init__(self, engine):
+    def __init__(self, section, x, y):
         self.elements = list()
         self.highlight = Highlight()
-        self.engine= engine
+
+        self.x = x
+        self.y = y
+        self.section = section
 
     def render(self, console: Console):
         for element in self.elements:
@@ -34,75 +37,84 @@ class UI:
             else:
                 element.mouseover = False
 
+    def add_element(self, element):
+        element.x = element.x + self.x
+        element.y = element.y + self.y
+        self.elements.append(element)
+
 class RemoteUI(UI):
-     def __init__(self, engine, tiles):
-        super().__init__( engine)
+     def __init__(self, section, x, y, tiles):
+        super().__init__(section, x, y)
         self.elements = list()
         self.highlight = Highlight()
 
-        bd = [6,4,3,3] #Button Dimensions
+        bd = [6, 4,3,3] #Button Dimensions
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 1), tiles=button_tiles )
-        self.elements.append(one_button)
+        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 1), tiles=button_tiles )
+        self.add_element(one_button)
 
         bd = [9,4,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        two_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 2), tiles=button_tiles )
-        self.elements.append(two_button)
+        two_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 2), tiles=button_tiles )
+        self.add_element(two_button)
 
         bd = [12,4,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        three_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 3), tiles=button_tiles )
-        self.elements.append(three_button)
+        three_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 3), tiles=button_tiles )
+        self.add_element(three_button)
 
         bd = [6,7,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        four_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 4), tiles=button_tiles )
-        self.elements.append(four_button)
+        four_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 4), tiles=button_tiles )
+        self.add_element(four_button)
 
         bd = [9,7,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        five_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 5), tiles=button_tiles )
-        self.elements.append(five_button)
+        five_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 5), tiles=button_tiles )
+        self.add_element(five_button)
 
         bd = [12,7,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        six_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 6), tiles=button_tiles )
-        self.elements.append(six_button)
+        six_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 6), tiles=button_tiles )
+        self.add_element(six_button)
 
         bd = [6,10,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        seven_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 7), tiles=button_tiles )
-        self.elements.append(seven_button)
+        seven_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 7), tiles=button_tiles )
+        self.add_element(seven_button)
 
         bd = [9,10,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        eight_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 8), tiles=button_tiles )
-        self.elements.append(eight_button)
+        eight_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 8), tiles=button_tiles )
+        self.add_element(eight_button)
 
         bd = [12,10,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        nine_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 9), tiles=button_tiles )
-        self.elements.append(nine_button)
+        nine_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 9), tiles=button_tiles )
+        self.add_element(nine_button)
 
         bd = [6,13,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        clear_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ClearRemote(self.engine), tiles=button_tiles )
-        self.elements.append(clear_button)
+        clear_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ClearRemote(self.section.engine), tiles=button_tiles )
+        self.add_element(clear_button)
 
         bd = [9,13,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        zero_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.engine, 0), tiles=button_tiles )
-        self.elements.append(zero_button)
+        zero_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 0), tiles=button_tiles )
+        self.add_element(zero_button)
 
         bd = [12,13,3,3]
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        go_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ActivateRemote(self.engine), tiles=button_tiles )
-        self.elements.append(go_button)
+        go_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ActivateRemote(self.section.engine), tiles=button_tiles )
+        self.add_element(go_button)
         
 
 class UIElement:
-    def __init__(self):
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
         self.mouseover = False
         pass
 
@@ -115,13 +127,9 @@ class UIElement:
 
 class Button(UIElement):
     def __init__(self, x: int, y: int, width: int, height: int, click_action: Action, tiles):
-        super().__init__()
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+        super().__init__(x,y,width,height)
         self.click_action = click_action
-        self.tiles= tiles
+        self.tiles = tiles
 
         self.highlight_bg = (128,128,128)
         self.normal_bg= (255,255,255)

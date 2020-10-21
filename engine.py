@@ -8,30 +8,33 @@ from tcod.console import Console
 
 import tile_types
 from input_handlers import EventHandler, MainGameEventHandler
-from page_manager import PageManager
-from ui import RemoteUI
-from remote import Remote
+from sections.page_manager import PageManager
+from sections.remote import Remote
 
 
 class Engine:
-    def __init__(self, screen_width, screen_height, remote_width, remote_height, ui_context_pointer):
+    def __init__(self):
        
+        screen_width = 40
+        screen_height = 24
+
+        remote_width = 19
+        remote_height = 24
+
         self.width = screen_width
         self.height = screen_height
-        self.event_handler: EventHandler = MainGameEventHandler(self, ui_context_pointer)
+        self.event_handler: EventHandler = MainGameEventHandler(self)
         self.mouse_location = (0, 0)
-        self.page_manager = PageManager(self, screen_width, screen_height)
-        self.remote = Remote(self, remote_width, remote_height)
 
-        self.remote_ui = RemoteUI(self, self.remote.tiles["graphic"])
+        #Section Setup
+        self.page_manager = PageManager(self, 0,0, screen_width, screen_height)
+        self.remote = Remote(self, screen_width + 1, 0, remote_width, remote_height)
 
-    def render(self, root_console: Console, ui_console: Console) -> None:
+    def render(self, root_console: Console) -> None:
         """ Renders the game to console. """
         
         self.page_manager.render(root_console)
-
-        self.remote.render(ui_console)
-        self.remote_ui.render(ui_console)
+        self.remote.render(root_console)
 
 
     def update(self):
