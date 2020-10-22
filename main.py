@@ -9,7 +9,7 @@ from tcod.sdl import Window
 
 
 def main() -> None:
-    screen_width = 60
+    screen_width = 62
     screen_height = 24
 
     tileset = tcod.tileset.load_tilesheet(

@@ -16,8 +16,8 @@ class PageManager(Section):
 
         self.pages = {}
 
-        self.pages['100']=Page('images/test.xp')
-        self.pages['121']=Page('images/test.xp')
+        self.pages['100']=Page('images/main.xp')
+        self.pages['101']=Page('images/newsMain.xp')
         self.pages['137']=Page('images/test.xp')
 
         self.active_page_key = '100'
@@ -47,11 +47,11 @@ class PageManager(Section):
 
     def update(self):
         if self.state == PageManagerState.SEARCHING_FOR_PAGE:
-            self.searching_for_page_progress += 1
             if str(self.searching_for_page_progress) == self.active_page_key:
                 self.state = PageManagerState.DISPLAYING_PAGE
                 self.active_page = self.pages[self.active_page_key]
                 self.tiles = self.active_page.tiles
+            self.searching_for_page_progress += 1
 
     def change_page(self, page : str):
         if page in self.pages:

@@ -18,11 +18,9 @@ class Engine:
         screen_width = 40
         screen_height = 24
 
-        remote_width = 19
+        remote_width = 21
         remote_height = 24
 
-        self.width = screen_width
-        self.height = screen_height
         self.event_handler: EventHandler = MainGameEventHandler(self)
         self.mouse_location = (0, 0)
 

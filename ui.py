@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from tcod import Console, event
 from highlight import Highlight
 
-from actions import EnterRemoteNumber, ClearRemote, ActivateRemote
+from actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote
 
 class UI:
     def __init__(self, section, x, y):
