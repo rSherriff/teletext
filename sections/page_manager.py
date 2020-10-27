@@ -18,7 +18,13 @@ class PageManager(Section):
 
         self.pages['100']=Page('images/main.xp')
         self.pages['101']=Page('images/newsMain.xp')
-        self.pages['137']=Page('images/test.xp')
+        self.pages['201']=Page('images/sportsMain.xp')
+        self.pages['301']=Page('images/musicMain.xp')
+        self.pages['401']=Page('images/tvMain.xp')
+        self.pages['411']=Page('images/radioMain.xp')
+        self.pages['501']=Page('images/letters.xp')
+        self.pages['601']=Page('images/judyProgram.xp')
+        
 
         self.active_page_key = '100'
         self.active_page = self.pages[self.active_page_key]
@@ -58,4 +64,3 @@ class PageManager(Section):
             self.active_page_key = page
             self.state = PageManagerState.SEARCHING_FOR_PAGE
             self.searching_for_page_progress = 100
-            print('Changing Pages')

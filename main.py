@@ -39,7 +39,7 @@ def main() -> None:
             engine.event_handler.handle_events(root_context)
 
             cycle += 1
-            if cycle % 15 == 0:
+            if cycle % 2 == 0:
                 engine.update()
 
 if __name__ == "__main__":
