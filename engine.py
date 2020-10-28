@@ -30,7 +30,6 @@ class Engine:
 
     def render(self, root_console: Console) -> None:
         """ Renders the game to console. """
-        
         self.page_manager.render(root_console)
         self.remote.render(root_console)
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import Optional, TYPE_CHECKING, Tuple
-from actions import Action, EscapeAction
+from actions import Action, EscapeAction, EnterRemoteNumber, ClearRemote, ActivateRemote,DeleteRemoteNumber
 from enum import auto, Enum
 from highlight import Highlight
 
@@ -46,6 +46,31 @@ class MainGameEventHandler(EventHandler):
 
         if key == tcod.event.K_ESCAPE:
             actions.append(EscapeAction(self.engine))
+        elif key == tcod.event.K_0:
+            actions.append(EnterRemoteNumber(self.engine, 0))
+        elif key == tcod.event.K_1:
+            actions.append(EnterRemoteNumber(self.engine, 1))
+        elif key == tcod.event.K_2:
+            actions.append(EnterRemoteNumber(self.engine, 2))
+        elif key == tcod.event.K_3:
+            actions.append(EnterRemoteNumber(self.engine, 3))
+        elif key == tcod.event.K_4:
+            actions.append(EnterRemoteNumber(self.engine, 4))
+        elif key == tcod.event.K_5:
+            actions.append(EnterRemoteNumber(self.engine, 5))
+        elif key == tcod.event.K_6:
+            actions.append(EnterRemoteNumber(self.engine, 6))
+        elif key == tcod.event.K_7:
+            actions.append(EnterRemoteNumber(self.engine, 7))
+        elif key == tcod.event.K_8:
+            actions.append(EnterRemoteNumber(self.engine, 8))
+        elif key == tcod.event.K_9:
+            actions.append(EnterRemoteNumber(self.engine, 9))
+        elif key == tcod.event.K_BACKSPACE:
+            actions.append(DeleteRemoteNumber(self.engine))
+        elif key == tcod.event.K_RETURN or key == tcod.event.K_RETURN2:
+            actions.append(ActivateRemote(self.engine))
+        
 
         # No valid key was pressed
         return actions

@@ -40,3 +40,7 @@ class ClearRemote(Action):
 class ActivateRemote(Action):
     def perform(self) -> None:
         self.engine.remote.activate()
+
+class DeleteRemoteNumber(Action):
+    def perform(self) -> None:
+        self.engine.remote.delete_number()

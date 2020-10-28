@@ -25,7 +25,6 @@ class PageManager(Section):
         self.pages['501']=Page('images/letters.xp')
         self.pages['601']=Page('images/judyProgram.xp')
         
-
         self.active_page_key = '100'
         self.active_page = self.pages[self.active_page_key]
 
@@ -64,3 +63,6 @@ class PageManager(Section):
             self.active_page_key = page
             self.state = PageManagerState.SEARCHING_FOR_PAGE
             self.searching_for_page_progress = 100
+
+    def does_page_exist(self, page : str):
+        return page in self.pages

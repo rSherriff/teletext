@@ -18,3 +18,6 @@ class Section:
 
         if self.ui is not None:
             self.ui.render(console)
+
+    def update(self):
+        pass
