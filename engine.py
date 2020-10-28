@@ -10,7 +10,7 @@ import tile_types
 from input_handlers import EventHandler, MainGameEventHandler
 from sections.page_manager import PageManager
 from sections.remote import Remote
-
+from sections.answers import Answers
 
 class Engine:
     def __init__(self):
@@ -21,17 +21,22 @@ class Engine:
         remote_width = 21
         remote_height = 24
 
+        answer_panel_width = 26
+        answer_panel_height = 26
+
         self.event_handler: EventHandler = MainGameEventHandler(self)
         self.mouse_location = (0, 0)
 
         #Section Setup
         self.page_manager = PageManager(self, 0,0, screen_width, screen_height)
         self.remote = Remote(self, screen_width + 1, 0, remote_width, remote_height)
+        self.answers = Answers(self, screen_width + remote_width + 1, 0, answer_panel_width, answer_panel_height)
 
     def render(self, root_console: Console) -> None:
         """ Renders the game to console. """
         self.page_manager.render(root_console)
         self.remote.render(root_console)
+        self.answers.render(root_console)
 
 
     def update(self):
