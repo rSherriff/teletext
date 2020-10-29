@@ -71,15 +71,19 @@ class MainGameEventHandler(EventHandler):
         elif key == tcod.event.K_RETURN or key == tcod.event.K_RETURN2:
             actions.append(ActivateRemote(self.engine))
         
-        self.engine.answers.ui.keydown(event)
+        for section in self.engine.sections:
+            if section.ui is not None:
+                section.ui.keydown(event)
 
         # No valid key was pressed
         return actions
 
     def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
         self.engine.mouse_location = self.current_context.pixel_to_tile(event.pixel.x, event.pixel.y)
-        self.engine.remote.ui.mousemove(self.engine.mouse_location[0], self.engine.mouse_location[1])
-        self.engine.answers.ui.mousemove(self.engine.mouse_location[0], self.engine.mouse_location[1])
+
+        for section in self.engine.sections:
+            if section.ui is not None:
+                section.ui.mousemove(self.engine.mouse_location[0], self.engine.mouse_location[1])
 
     def ev_mousebuttondown(self, event: tcod.event.MouseButtonDown) -> Optional[list(Action)]:
         actions = []
@@ -87,8 +91,9 @@ class MainGameEventHandler(EventHandler):
         self.is_mouse_down = True
         self.mouse_down_location = self.engine.mouse_location
 
-        self.engine.remote.ui.mousedown(self.engine.mouse_location[0], self.engine.mouse_location[1])
-        self.engine.answers.ui.mousedown(self.engine.mouse_location[0], self.engine.mouse_location[1])
+        for section in self.engine.sections:
+            if section.ui is not None:
+                section.ui.mousedown(self.engine.mouse_location[0], self.engine.mouse_location[1])
 
         return actions
 

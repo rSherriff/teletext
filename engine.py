@@ -27,18 +27,23 @@ class Engine:
         self.event_handler: EventHandler = MainGameEventHandler(self)
         self.mouse_location = (0, 0)
 
-        #Section Setup
         self.page_manager = PageManager(self, 0,0, screen_width, screen_height)
         self.remote = Remote(self, screen_width + 1, 0, remote_width, remote_height)
         self.answers = Answers(self, screen_width + remote_width + 1, 0, answer_panel_width, answer_panel_height)
 
+        #Section Setup
+        self.sections = list()
+        self.sections.append(self.page_manager)
+        self.sections.append(self.remote)
+        self.sections.append(self.answers)
+
     def render(self, root_console: Console) -> None:
         """ Renders the game to console. """
-        self.page_manager.render(root_console)
-        self.remote.render(root_console)
-        self.answers.render(root_console)
+        for section in self.sections:
+            section.render(root_console)
 
 
     def update(self):
         """ Engine update tick """
-        self.page_manager.update()
+        for section in self.sections:
+            section.update()
