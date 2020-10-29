@@ -22,7 +22,7 @@ class Engine:
         remote_height = 24
 
         answer_panel_width = 26
-        answer_panel_height = 26
+        answer_panel_height = 32
 
         self.event_handler: EventHandler = MainGameEventHandler(self)
         self.mouse_location = (0, 0)
@@ -41,7 +41,6 @@ class Engine:
         """ Renders the game to console. """
         for section in self.sections:
             section.render(root_console)
-
 
     def update(self):
         """ Engine update tick """

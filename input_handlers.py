@@ -44,8 +44,13 @@ class MainGameEventHandler(EventHandler):
 
         key = event.sym
 
+        for section in self.engine.sections:
+            if section.ui is not None:
+                section.ui.keydown(event)
+
         if key == tcod.event.K_ESCAPE:
             actions.append(EscapeAction(self.engine))
+        """
         elif key == tcod.event.K_0:
             actions.append(EnterRemoteNumber(self.engine, 0))
         elif key == tcod.event.K_1:
@@ -70,10 +75,7 @@ class MainGameEventHandler(EventHandler):
             actions.append(DeleteRemoteNumber(self.engine))
         elif key == tcod.event.K_RETURN or key == tcod.event.K_RETURN2:
             actions.append(ActivateRemote(self.engine))
-        
-        for section in self.engine.sections:
-            if section.ui is not None:
-                section.ui.keydown(event)
+        """
 
         # No valid key was pressed
         return actions

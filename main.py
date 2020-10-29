@@ -10,7 +10,7 @@ from tcod.sdl import Window
 
 def main() -> None:
     screen_width = 88
-    screen_height = 30
+    screen_height = 32
 
     tileset = tcod.tileset.load_tilesheet(
         "./ceefax_teletext_6x10.png", 16, 16, tcod.tileset.CHARMAP_CP437

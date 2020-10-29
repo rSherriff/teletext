@@ -127,21 +127,25 @@ class AnswersUI(UI):
         input_one = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
         self.add_element(input_one)
 
-        idim = [3,6,16,1] #Input dimensions
+        idim = [3,6,16,1]
         input_two = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
         self.add_element(input_two)
 
-        idim = [3,12,16,1] #Input dimensions
+        idim = [3,12,16,1]
         input_three = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
         self.add_element(input_three)
 
-        idim = [3,18,16,1] #Input dimensions
+        idim = [3,18,16,1]
         input_four = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
         self.add_element(input_four)
 
-        idim = [3,24,16,1] #Input dimensions
+        idim = [3,24,16,1]
         input_five = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
         self.add_element(input_five)
+
+        idim = [3,29,16,1]
+        input_six = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
+        self.add_element(input_six)
 
 class UIElement:
     def __init__(self, x, y, width, height):
@@ -233,7 +237,7 @@ class Input(UIElement):
 
             if key == tcod.event.K_BACKSPACE:
                 self.text = self.text[:-1]
-            elif key == tcod.event.K_BACKSPACE or key == tcod.event.K_RETURN:
+            elif key == tcod.event.K_RETURN or key == tcod.event.K_ESCAPE:
                 self.selected = False
                 self.blink = False
             elif key == tcod.event.K_SPACE and len(self.text) < self.width - 1:
