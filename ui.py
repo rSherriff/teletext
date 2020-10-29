@@ -213,13 +213,15 @@ class Input(UIElement):
 
     def blink_on(self):
         self.blink = True
-        t = Timer(self.blink_interval, self.blink_off)
-        t.start()
+        if self.selected == True:
+            t = Timer(self.blink_interval, self.blink_off)
+            t.start()
     
     def blink_off(self):
         self.blink = False
-        t = Timer(self.blink_interval, self.blink_on)
-        t.start()
+        if self.selected == True:
+            t = Timer(self.blink_interval, self.blink_on)
+            t.start()
 
     def on_mousedown(self):
         self.selected = True
