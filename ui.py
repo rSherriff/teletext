@@ -146,7 +146,7 @@ class AnswersUI(UI):
         idim = [3,29,16,1]
         input_six = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
         self.add_element(input_six)
-
+        
 class UIElement:
     def __init__(self, x, y, width, height):
         self.x = x
@@ -242,7 +242,7 @@ class Input(UIElement):
                 self.blink = False
             elif key == tcod.event.K_SPACE and len(self.text) < self.width - 1:
                 self.text += ' '
-            elif len(self.text) < self.width - 1:
+            elif len(self.text) < self.width - 1 and tcod.event.K_a <= key <= tcod.event.K_z:
                 letter = get_letter_key(key)
                 if keyboard.is_pressed('shift'):
                     letter = letter.capitalize()
