@@ -5,7 +5,7 @@ import tile_types
 import tcod
 import xp_loader
 import gzip
-from ui import RemoteUI
+from ui.remoteUI import RemoteUI
 from enum import auto, Enum
 from threading import Timer
 

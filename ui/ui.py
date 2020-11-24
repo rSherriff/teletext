@@ -8,7 +8,7 @@ from highlight import Highlight
 import tcod.event
 import keyboard
 from threading import Timer
-from actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote, CloseMenu, OpenMenu, EscapeAction
+from actions.actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote, CloseMenu, OpenMenu, EscapeAction
 
 class UI:
     def __init__(self, section, x, y):
@@ -50,131 +50,6 @@ class UI:
         element.x = element.x + self.x
         element.y = element.y + self.y
         self.elements.append(element)
-
-class RemoteUI(UI):
-    def __init__(self, section, x, y, tiles):
-        super().__init__(section, x, y)
-        self.elements = list()
-        self.highlight = Highlight()
-
-        bd = [6, 4,3,3] #Button Dimensions
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 1), tiles=button_tiles )
-        self.add_element(one_button)
-
-        bd = [9,4,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        two_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 2), tiles=button_tiles )
-        self.add_element(two_button)
-
-        bd = [12,4,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        three_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 3), tiles=button_tiles )
-        self.add_element(three_button)
-
-        bd = [6,7,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        four_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 4), tiles=button_tiles )
-        self.add_element(four_button)
-
-        bd = [9,7,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        five_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 5), tiles=button_tiles )
-        self.add_element(five_button)
-
-        bd = [12,7,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        six_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 6), tiles=button_tiles )
-        self.add_element(six_button)
-
-        bd = [6,10,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        seven_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 7), tiles=button_tiles )
-        self.add_element(seven_button)
-
-        bd = [9,10,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        eight_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 8), tiles=button_tiles )
-        self.add_element(eight_button)
-
-        bd = [12,10,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        nine_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 9), tiles=button_tiles )
-        self.add_element(nine_button)
-
-        bd = [6,13,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        clear_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ClearRemote(self.section.engine), tiles=button_tiles )
-        self.add_element(clear_button)
-
-        bd = [9,13,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        zero_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 0), tiles=button_tiles )
-        self.add_element(zero_button)
-
-        bd = [12,13,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        go_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ActivateRemote(self.section.engine), tiles=button_tiles )
-        self.add_element(go_button)
-
-    def keydown(self, event: tcod.event.KeyDown):
-        super().keydown(event)
-        key = event.sym
-        if key == tcod.event.K_ESCAPE:
-            OpenMenu(self.section.engine).perform()
-        
-class AnswersUI(UI):
-    def __init__(self, section, x, y, tiles):
-        super().__init__(section, x, y)
-        self.elements = list()
-        self.highlight = Highlight()
-
-        idim = [3,4,16,1] #Input dimensions
-        input_one = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Richard Holmes')
-        self.add_element(input_one)
-
-        idim = [3,6,16,1]
-        input_two = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Judy Langsford')
-        self.add_element(input_two)
-
-        idim = [3,12,16,1]
-        input_three = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Robert Dolan')
-        self.add_element(input_three)
-
-        idim = [3,18,16,1]
-        input_four = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Cat Grant')
-        self.add_element(input_four)
-
-        idim = [3,24,16,1]
-        input_five = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Angelica Osman')
-        self.add_element(input_five)
-
-        idim = [3,29,16,1]
-        input_six = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Steven Kielty')
-        self.add_element(input_six)
-
-class MenuUI(UI):
-    def __init__(self, section, x, y, tiles):
-        super().__init__(section, x, y)
-        self.elements = list()
-        self.highlight = Highlight()
-
-        bd = [38, 15,10,3] #Button Dimensions
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=CloseMenu(self.section.engine), tiles=button_tiles )
-        self.add_element(one_button)
-
-        bd = [38, 19,10,3] #Button Dimensions
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EscapeAction(self.section.engine), tiles=button_tiles )
-        self.add_element(one_button)
-
-    def keydown(self, event: tcod.event.KeyDown):
-        super().keydown(event)
-        key = event.sym
-        if key == tcod.event.K_RETURN or key == tcod.event.K_ESCAPE or key == tcod.event.K_KP_ENTER:
-            x = CloseMenu(self.section.engine).perform()
-            
 
 class UIElement:
     def __init__(self, x, y, width, height):

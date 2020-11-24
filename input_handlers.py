@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import Optional, TYPE_CHECKING, Tuple
-from actions import Action, EscapeAction, EnterRemoteNumber, ClearRemote, ActivateRemote,DeleteRemoteNumber
+from actions.actions import Action, EscapeAction, EnterRemoteNumber, ClearRemote, ActivateRemote,DeleteRemoteNumber
 from highlight import Highlight
 
 import tcod.event

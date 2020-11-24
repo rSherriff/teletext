@@ -4,7 +4,7 @@ import numpy as np
 import xp_loader
 import gzip
 import tile_types
-from ui import AnswersUI
+from ui.answerUI import AnswersUI
 
 answer_panel_xp_file = 'images/answerPanel.xp'
 
