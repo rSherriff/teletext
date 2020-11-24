@@ -72,4 +72,7 @@ class Engine:
 
     def open_menu(self):
         self.state = GameState.MENU
+
+    def correct_answer_given(self, answer_number):
+        print("Correct answer given for question {0}".format(answer_number))
         

@@ -153,16 +153,18 @@ class Input(UIElement):
                 self.text += letter
 
 class CheckedInput(Input):
-    def __init__(self, x: int, y: int, width: int, height: int, check_string: str):
+    def __init__(self, x: int, y: int, width: int, height: int, check_string: str, completion_action: Action):
         super().__init__(x,y,width,height)
         self.check_string = check_string
         self.input_correct = False
+        self.completion_action = completion_action
 
     def on_keydown(self, event):
         super().on_keydown(event)
 
         if self.text.capitalize() == self.check_string.capitalize():
             self.input_correct = True
+            self.completion_action.perform()
         else:
             self.input_correct = False
 

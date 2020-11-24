@@ -52,3 +52,11 @@ class CloseMenu(Action):
 class OpenMenu(Action):
     def perform(self) -> None:
         self.engine.open_menu()
+
+class AnswerCorrect(Action):
+    def __init__(self, engine, answer_number: int) -> None:
+        super().__init__(engine)
+        self.answer_number = answer_number
+
+    def perform(self):
+        self.engine.correct_answer_given(self.answer_number)
