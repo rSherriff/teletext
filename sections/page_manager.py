@@ -61,8 +61,7 @@ class PageManager(Section):
         console.tiles_rgb[self.x:self.x+self.width, self.y] = (ord(' '), (0,0,0), (0,0,0))
 
         console.print(self.x + 3, 0, 'P' + self.active_page_key, fg=(255,255,255), bg=(0,0,0))
-        console.print(self.x + 8, 0, 'CEEFAX', fg=(255,255,255), bg=(0,0,0))
-        console.print(self.x + 15, 0, '1', fg=(255,255,255), bg=(0,0,0))
+        console.print(self.x + 8, 0, 'TELUSFAX', fg=(255,255,255), bg=(0,0,0))
 
         if self.state == PageManagerState.DISPLAYING_PAGE:
             console.print(self.x + 17, 0, self.active_page_key, fg=(255,255,255), bg=(0,0,0))

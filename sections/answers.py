@@ -25,3 +25,15 @@ class Answers(Section):
                 self.tiles[w,h]['graphic']=  xp_data['layer_data'][0]['cells'][w][h]
 
         self.ui = AnswersUI(self, x,y, self.tiles["graphic"])
+        self.all_answers_correct = False
+
+    def update(self):
+        self.all_answers_correct = True
+        for answer_input in self.ui.elements:
+            if answer_input.input_correct is False:
+                self.all_answers_correct = False
+
+        if self.all_answers_correct is True:
+            print('All answers correct!')
+                
+

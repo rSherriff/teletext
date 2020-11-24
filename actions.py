@@ -44,3 +44,11 @@ class ActivateRemote(Action):
 class DeleteRemoteNumber(Action):
     def perform(self) -> None:
         self.engine.remote.delete_number()
+
+class CloseMenu(Action):
+    def perform(self) -> None:
+        self.engine.close_menu()
+
+class OpenMenu(Action):
+    def perform(self) -> None:
+        self.engine.open_menu()

@@ -8,7 +8,7 @@ from highlight import Highlight
 import tcod.event
 import keyboard
 from threading import Timer
-from actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote
+from actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote, CloseMenu, OpenMenu, EscapeAction
 
 class UI:
     def __init__(self, section, x, y):
@@ -52,7 +52,7 @@ class UI:
         self.elements.append(element)
 
 class RemoteUI(UI):
-     def __init__(self, section, x, y, tiles):
+    def __init__(self, section, x, y, tiles):
         super().__init__(section, x, y)
         self.elements = list()
         self.highlight = Highlight()
@@ -116,6 +116,12 @@ class RemoteUI(UI):
         button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
         go_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ActivateRemote(self.section.engine), tiles=button_tiles )
         self.add_element(go_button)
+
+    def keydown(self, event: tcod.event.KeyDown):
+        super().keydown(event)
+        key = event.sym
+        if key == tcod.event.K_ESCAPE:
+            OpenMenu(self.section.engine).perform()
         
 class AnswersUI(UI):
     def __init__(self, section, x, y, tiles):
@@ -124,28 +130,51 @@ class AnswersUI(UI):
         self.highlight = Highlight()
 
         idim = [3,4,16,1] #Input dimensions
-        input_one = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
+        input_one = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Richard Holmes')
         self.add_element(input_one)
 
         idim = [3,6,16,1]
-        input_two = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
+        input_two = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Judy Langsford')
         self.add_element(input_two)
 
         idim = [3,12,16,1]
-        input_three = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
+        input_three = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Robert Dolan')
         self.add_element(input_three)
 
         idim = [3,18,16,1]
-        input_four = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
+        input_four = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Cat Grant')
         self.add_element(input_four)
 
         idim = [3,24,16,1]
-        input_five = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
+        input_five = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Angelica Osman')
         self.add_element(input_five)
 
         idim = [3,29,16,1]
-        input_six = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
+        input_six = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Steven Kielty')
         self.add_element(input_six)
+
+class MenuUI(UI):
+    def __init__(self, section, x, y, tiles):
+        super().__init__(section, x, y)
+        self.elements = list()
+        self.highlight = Highlight()
+
+        bd = [38, 15,10,3] #Button Dimensions
+        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
+        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=CloseMenu(self.section.engine), tiles=button_tiles )
+        self.add_element(one_button)
+
+        bd = [38, 19,10,3] #Button Dimensions
+        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
+        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EscapeAction(self.section.engine), tiles=button_tiles )
+        self.add_element(one_button)
+
+    def keydown(self, event: tcod.event.KeyDown):
+        super().keydown(event)
+        key = event.sym
+        if key == tcod.event.K_RETURN or key == tcod.event.K_ESCAPE or key == tcod.event.K_KP_ENTER:
+            x = CloseMenu(self.section.engine).perform()
+            
 
 class UIElement:
     def __init__(self, x, y, width, height):
@@ -183,13 +212,13 @@ class Button(UIElement):
 
         for w in range(0,self.width):
             for h in range(0, self.height):
-                if self.tiles[h,w][0] != 9488:
+                if self.tiles[w,h][0] != 9488:
                     if self.mouseover:
-                        self.tiles[h,w][1] = self.highlight_bg
+                        self.tiles[w,h][1] = self.highlight_bg
                     else:
-                        self.tiles[h,w][1] = self.normal_bg 
+                        self.tiles[w,h][1] = self.normal_bg 
 
-                temp_console.tiles_rgb[w,h] = self.tiles[h,w]
+                temp_console.tiles_rgb[h,w] = self.tiles[w,h]
        
         temp_console.blit(console, self.x, self.y)
 
@@ -248,6 +277,19 @@ class Input(UIElement):
                     letter = letter.capitalize()
                 self.text += letter
 
+class CheckedInput(Input):
+    def __init__(self, x: int, y: int, width: int, height: int, check_string: str):
+        super().__init__(x,y,width,height)
+        self.check_string = check_string
+        self.input_correct = False
+
+    def on_keydown(self, event):
+        super().on_keydown(event)
+
+        if self.text.capitalize() == self.check_string.capitalize():
+            self.input_correct = True
+        else:
+            self.input_correct = False
 
 
 def get_letter_key(key):

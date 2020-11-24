@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Optional, TYPE_CHECKING, Tuple
 from actions import Action, EscapeAction, EnterRemoteNumber, ClearRemote, ActivateRemote,DeleteRemoteNumber
-from enum import auto, Enum
 from highlight import Highlight
 
 import tcod.event
@@ -44,12 +43,9 @@ class MainGameEventHandler(EventHandler):
 
         key = event.sym
 
-        for section in self.engine.sections:
+        for section in self.engine.get_active_sections():
             if section.ui is not None:
                 section.ui.keydown(event)
-
-        if key == tcod.event.K_ESCAPE:
-            actions.append(EscapeAction(self.engine))
         """
         elif key == tcod.event.K_0:
             actions.append(EnterRemoteNumber(self.engine, 0))
@@ -83,7 +79,7 @@ class MainGameEventHandler(EventHandler):
     def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
         self.engine.mouse_location = self.current_context.pixel_to_tile(event.pixel.x, event.pixel.y)
 
-        for section in self.engine.sections:
+        for section in self.engine.get_active_sections():
             if section.ui is not None:
                 section.ui.mousemove(self.engine.mouse_location[0], self.engine.mouse_location[1])
 
@@ -93,7 +89,7 @@ class MainGameEventHandler(EventHandler):
         self.is_mouse_down = True
         self.mouse_down_location = self.engine.mouse_location
 
-        for section in self.engine.sections:
+        for section in self.engine.get_active_sections():
             if section.ui is not None:
                 section.ui.mousedown(self.engine.mouse_location[0], self.engine.mouse_location[1])
 
