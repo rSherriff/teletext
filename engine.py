@@ -13,6 +13,7 @@ from sections.answers import Answers
 from sections.menu import Menu
 from sections.page_manager import PageManager
 from sections.remote import Remote
+from sections.poster import Poster
 
 class GameState(Enum):
     MENU = auto()
@@ -39,6 +40,14 @@ class Engine:
         self.remote = Remote(self, screen_width + 1, 0, remote_width, remote_height)
         self.answers = Answers(self, screen_width + remote_width + 1, 0, answer_panel_width, answer_panel_height)
 
+        #Posters
+        self.question_one_poster =Poster(self,50,3, 26, 10, "images/questionOnePoster.xp")
+        self.question_two_poster =Poster(self,50,11, 26, 10, "images/questionFourPoster.xp")
+        self.question_three_poster =Poster(self,50,17, 26, 10, "images/questionTwoPoster.xp")
+        self.question_four_poster =Poster(self,50,15, 26, 7, "images/questionThreePoster.xp")
+        self.question_five_poster =Poster(self,50,14, 26, 12, "images/questionFivePoster.xp")
+
+
         #Section Setup
         self.menu_sections = list()
         self.menu_sections.append(self.menu)
@@ -47,6 +56,11 @@ class Engine:
         self.game_sections.append(self.page_manager)
         self.game_sections.append(self.remote)
         self.game_sections.append(self.answers)
+        self.game_sections.append(self.question_one_poster)
+        self.game_sections.append(self.question_two_poster)
+        self.game_sections.append(self.question_three_poster)
+        self.game_sections.append(self.question_four_poster)
+        self.game_sections.append(self.question_five_poster)
 
         self.state = GameState.MENU
 
@@ -75,4 +89,28 @@ class Engine:
 
     def correct_answer_given(self, answer_number):
         print("Correct answer given for question {0}".format(answer_number))
+
+    def show_question_tooltip(self, question_number):
+        if question_number == 1:
+            self.question_one_poster.invisible = False
+        elif question_number == 2:
+            self.question_two_poster.invisible = False
+        elif question_number == 3:
+            self.question_three_poster.invisible = False
+        elif question_number == 4:
+            self.question_four_poster.invisible = False
+        elif question_number == 5:
+            self.question_five_poster.invisible = False
+
+    def hide_question_tooltip(self, question_number):
+        if question_number == 1:
+            self.question_one_poster.invisible = True
+        elif question_number == 2:
+            self.question_two_poster.invisible = True
+        elif question_number == 3:
+            self.question_three_poster.invisible = True
+        elif question_number == 4:
+            self.question_four_poster.invisible = True
+        elif question_number == 5:
+            self.question_five_poster.invisible = True
         

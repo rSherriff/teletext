@@ -60,3 +60,19 @@ class AnswerCorrect(Action):
 
     def perform(self):
         self.engine.correct_answer_given(self.answer_number)
+
+class ShowQuestionTooltip(Action):
+    def __init__(self, engine, question_number: int) -> None:
+        super().__init__(engine)
+        self.question_number = question_number
+
+    def perform(self):
+        self.engine.show_question_tooltip(self.question_number)
+
+class HideQuestionTooltip(Action):
+    def __init__(self, engine, question_number: int) -> None:
+        super().__init__(engine)
+        self.question_number = question_number
+
+    def perform(self):
+        self.engine.hide_question_tooltip(self.question_number)

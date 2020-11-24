@@ -42,8 +42,12 @@ class UI:
     def mousemove(self, x: int, y: int):
         for element in self.elements:
             if element.is_mouseover(x, y):
+                if element.mouseover == False:
+                    element.on_mouseenter()
                 element.mouseover = True
             else:
+                if element.mouseover == True:
+                    element.on_mouseleave()
                 element.mouseover = False
 
     def add_element(self, element):
@@ -60,10 +64,16 @@ class UIElement:
         self.mouseover = False
         pass
 
-    def render(self):
-        raise NotImplementedError()
+    def render(self, console: Console):
+        pass
 
     def on_keydown(self, event: tcod.event.KeyDown):
+        pass
+
+    def on_mouseenter(self):
+        pass
+
+    def on_mouseleave(self):
         pass
 
     def is_mouseover(self, x: int, y: int):
@@ -168,6 +178,21 @@ class CheckedInput(Input):
         else:
             self.input_correct = False
 
+class HoverTrigger(UIElement):
+    def __init__(self, x: int, y: int, width: int, height: int, mouse_enter_action : Action, mouse_leave_action: Action):
+        super().__init__(x,y,width,height)
+        self.mouse_enter_action = mouse_enter_action
+        self.mouse_leave_action = mouse_leave_action
+
+    def on_mouseenter(self):
+        self.mouse_enter_action.perform()
+        
+    def on_mouseleave(self):
+        self.mouse_leave_action.perform()
+
+    def on_mousedown(self):
+        pass
+    
 
 def get_letter_key(key):
     if key == tcod.event.K_a:

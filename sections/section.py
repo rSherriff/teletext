@@ -13,8 +13,11 @@ class Section:
         self.tiles =  np.full((width, height), fill_value=tile_types.blank, order="F")
         self.ui = None
 
+        self.invisible = False
+
     def render(self, console):
-        console.tiles_rgb[self.x : self.x + self.width, self.y: self.y + self.height] = self.tiles["graphic"]
+        if self.invisible == False:
+            console.tiles_rgb[self.x : self.x + self.width, self.y: self.y + self.height] = self.tiles["graphic"]
 
         if self.ui is not None:
             self.ui.render(console)
