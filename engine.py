@@ -15,6 +15,8 @@ from sections.page_manager import PageManager
 from sections.remote import Remote
 from sections.poster import Poster
 
+from playsound import playsound
+
 class GameState(Enum):
     MENU = auto()
     IN_GAME = auto()
@@ -88,6 +90,7 @@ class Engine:
         self.state = GameState.MENU
 
     def correct_answer_given(self, answer_number):
+        playsound("sounds/correct_answer.wav", False)
         print("Correct answer given for question {0}".format(answer_number))
 
     def show_question_tooltip(self, question_number):

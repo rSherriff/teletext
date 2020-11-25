@@ -3,6 +3,7 @@ from sections.page import Page
 from datetime import datetime
 from enum import auto, Enum
 from sections.section import Section
+from playsound import playsound
 
 class PageManagerState(Enum):
     DISPLAYING_PAGE = auto()
@@ -78,6 +79,7 @@ class PageManager(Section):
                 self.state = PageManagerState.DISPLAYING_PAGE
                 self.active_page = self.pages[self.active_page_key]
                 self.tiles = self.active_page.tiles
+                playsound("sounds/arrive_at_page.wav", False)
             self.searching_for_page_progress += 1
 
     def change_page(self, page : str):
@@ -85,6 +87,7 @@ class PageManager(Section):
             self.active_page_key = page
             self.state = PageManagerState.SEARCHING_FOR_PAGE
             self.searching_for_page_progress = 100
+            playsound("sounds/search.wav", False)
 
     def does_page_exist(self, page : str):
         return page in self.pages
