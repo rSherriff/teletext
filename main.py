@@ -9,7 +9,7 @@ from tcod.sdl import Window
 
 
 def main() -> None:
-    screen_width = 88
+    screen_width = 87
     screen_height = 32
 
     tileset = tcod.tileset.load_tilesheet(
@@ -36,7 +36,7 @@ def main() -> None:
 
             root_context.present(root_console)
 
-            engine.event_handler.handle_events(root_context)
+            engine.handle_events(root_context)
 
             cycle += 1
             if cycle % 2 == 0:

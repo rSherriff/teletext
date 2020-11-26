@@ -15,7 +15,11 @@ from sections.page_manager import PageManager
 from sections.remote import Remote
 from sections.poster import Poster
 
+from effects.vertical_wipe_effect import VerticalWipeEffect, VerticalWipeDirection
+
 from playsound import playsound
+
+import tcod
 
 class GameState(Enum):
     MENU = auto()
@@ -30,7 +34,7 @@ class Engine:
         remote_width = 21
         remote_height = 24
 
-        answer_panel_width = 26
+        answer_panel_width = 25
         answer_panel_height = 32
 
         self.event_handler: EventHandler = MainGameEventHandler(self)
@@ -42,13 +46,14 @@ class Engine:
         self.remote = Remote(self, screen_width + 1, 0, remote_width, remote_height)
         self.answers = Answers(self, screen_width + remote_width + 1, 0, answer_panel_width, answer_panel_height)
 
-        #Posters
-        self.question_one_poster =Poster(self,50,3, 26, 10, "images/questionOnePoster.xp")
-        self.question_two_poster =Poster(self,50,11, 26, 10, "images/questionFourPoster.xp")
-        self.question_three_poster =Poster(self,50,17, 26, 10, "images/questionTwoPoster.xp")
-        self.question_four_poster =Poster(self,50,15, 26, 7, "images/questionThreePoster.xp")
-        self.question_five_poster =Poster(self,50,14, 26, 12, "images/questionFivePoster.xp")
+        self.full_screen_effect = VerticalWipeEffect(self, 0, 0, 87, 32)
 
+        #Posters
+        self.question_one_poster = Poster(self,50,3, 26, 10, "images/questionOnePoster.xp")
+        self.question_two_poster = Poster(self,50,11, 26, 10, "images/questionFourPoster.xp")
+        self.question_three_poster = Poster(self,50,17, 26, 10, "images/questionTwoPoster.xp")
+        self.question_four_poster = Poster(self,50,15, 26, 7, "images/questionThreePoster.xp")
+        self.question_five_poster = Poster(self,50,14, 26, 12, "images/questionFivePoster.xp")
 
         #Section Setup
         self.menu_sections = list()
@@ -66,16 +71,25 @@ class Engine:
 
         self.state = GameState.MENU
 
+
     def render(self, root_console: Console) -> None:
-        """ Renders the game to console. """
+        """ Renders the game to console """
         for section in self.get_active_sections():
             section.render(root_console)
-       
+
+        if self.full_screen_effect.in_effect == True:
+            self.full_screen_effect.render(root_console)
+        else:
+            self.full_screen_effect.set_tiles(root_console.tiles_rgb)
+
 
     def update(self):
         """ Engine update tick """
         for section in self.get_active_sections():
             section.update()
+
+    def handle_events(self,context: tcod.context.Context):
+        self.event_handler.handle_events(context, discard_events=self.full_screen_effect.in_effect)
 
     def get_active_sections(self):
         if self.state == GameState.MENU:
@@ -85,10 +99,12 @@ class Engine:
 
     def close_menu(self):
         self.state = GameState.IN_GAME
+        self.full_screen_effect.start(VerticalWipeDirection.DOWN)
 
     def open_menu(self):
         self.state = GameState.MENU
-
+        self.full_screen_effect.start(VerticalWipeDirection.UP)
+      
     def correct_answer_given(self, answer_number):
         playsound("sounds/correct_answer.wav", False)
         print("Correct answer given for question {0}".format(answer_number))

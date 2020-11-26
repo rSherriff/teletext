@@ -16,11 +16,12 @@ class Section:
         self.invisible = False
 
     def render(self, console):
-        if self.invisible == False:
-            console.tiles_rgb[self.x : self.x + self.width, self.y: self.y + self.height] = self.tiles["graphic"]
+        if len(self.tiles) > 0:
+            if self.invisible == False:
+                console.tiles_rgb[self.x : self.x + self.width, self.y: self.y + self.height] = self.tiles["graphic"]
 
-        if self.ui is not None:
-            self.ui.render(console)
+            if self.ui is not None:
+                self.ui.render(console)
 
     def update(self):
         pass

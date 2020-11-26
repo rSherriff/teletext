@@ -27,6 +27,8 @@ def new_tile(
 ) -> np.ndarray:
     return np.array((walkable,graphic), dtype=tile_dt)
 
+blank_graphic = (ord("."), (255, 255, 255), (0,0,0))
+
 blank = new_tile(
     walkable = True,
     graphic=(ord("."), (255, 255, 255), (0,0,0))

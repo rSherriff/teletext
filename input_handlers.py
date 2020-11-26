@@ -13,11 +13,14 @@ class EventHandler(tcod.event.EventDispatch[Action]):
     def __init__(self, engine: Engine):
         self.engine = engine
 
-    def handle_events(self, context: tcod.context.Context) -> None:
+    def handle_events(self, context: tcod.context.Context, discard_events: bool) -> None:
         for event in tcod.event.get():
+
+            if discard_events == True:
+                continue
+
             context.convert_event(event)
             self.dispatch(event)
-            pass
 
     def ev_quit(self, event: tcod.event.Quit) -> None:
         raise SystemExit()
@@ -26,9 +29,13 @@ class EventHandler(tcod.event.EventDispatch[Action]):
         self.engine.render(root_console)
 
 class MainGameEventHandler(EventHandler):
-    def handle_events(self, context: tcod.context.Context) -> None:
+    def handle_events(self, context: tcod.context.Context, discard_events: bool) -> None:
         self.current_context = context
         for event in tcod.event.get():
+
+            if discard_events == True:
+                continue
+
             context.convert_event(event)
             actions = self.dispatch(event)
 
