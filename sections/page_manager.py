@@ -3,6 +3,7 @@ from sections.page import Page
 from datetime import datetime
 from enum import auto, Enum
 from sections.section import Section
+from playsound import playsound
 
 class PageManagerState(Enum):
     DISPLAYING_PAGE = auto()
@@ -61,8 +62,7 @@ class PageManager(Section):
         console.tiles_rgb[self.x:self.x+self.width, self.y] = (ord(' '), (0,0,0), (0,0,0))
 
         console.print(self.x + 3, 0, 'P' + self.active_page_key, fg=(255,255,255), bg=(0,0,0))
-        console.print(self.x + 8, 0, 'CEEFAX', fg=(255,255,255), bg=(0,0,0))
-        console.print(self.x + 15, 0, '1', fg=(255,255,255), bg=(0,0,0))
+        console.print(self.x + 8, 0, 'TELUSFAX', fg=(255,255,255), bg=(0,0,0))
 
         if self.state == PageManagerState.DISPLAYING_PAGE:
             console.print(self.x + 17, 0, self.active_page_key, fg=(255,255,255), bg=(0,0,0))
@@ -79,6 +79,7 @@ class PageManager(Section):
                 self.state = PageManagerState.DISPLAYING_PAGE
                 self.active_page = self.pages[self.active_page_key]
                 self.tiles = self.active_page.tiles
+                playsound("sounds/arrive_at_page.wav", False)
             self.searching_for_page_progress += 1
 
     def change_page(self, page : str):
@@ -86,6 +87,7 @@ class PageManager(Section):
             self.active_page_key = page
             self.state = PageManagerState.SEARCHING_FOR_PAGE
             self.searching_for_page_progress = 100
+            playsound("sounds/search.wav", False)
 
     def does_page_exist(self, page : str):
         return page in self.pages

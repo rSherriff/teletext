@@ -5,9 +5,10 @@ import tile_types
 import tcod
 import xp_loader
 import gzip
-from ui import RemoteUI
+from ui.remoteUI import RemoteUI
 from enum import auto, Enum
 from threading import Timer
+from playsound import playsound
 
 remote_xp_file = 'images/remote.xp'
 num_digits = 3
@@ -66,12 +67,16 @@ class Remote(Section):
             self.num_digits = 3
             self.selected_number[2] = number
 
+        playsound("sounds/remote_button_press.wav", False)
+
     def clear(self):
         for i in range(0, num_digits):
             self.tiles[self.first_digit_pos[0] + i, self.first_digit_pos[1]]['graphic'][0] = ord(' ')
 
         self.num_digits = 0
         self.selected_number = [0,0,0]
+
+        playsound("sounds/remote_button_press.wav", False)
 
     def delete_number(self):
         if self.num_digits == 1:
@@ -83,11 +88,15 @@ class Remote(Section):
             self.num_digits = 2
             self.selected_number[2] = 0
 
+        playsound("sounds/remote_button_press.wav", False)
+
     def clear_error(self):
         self.remote_error = RemoteErrors.NONE
 
     def page_not_found(self):
         self.remote_error = RemoteErrors.PAGE_NOT_FOUND
+
+        playsound("sounds/page_not_found.wav", False)
 
     def activate(self):
         if self.num_digits == 3:

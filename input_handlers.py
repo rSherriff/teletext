@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from typing import Optional, TYPE_CHECKING, Tuple
-from actions import Action, EscapeAction, EnterRemoteNumber, ClearRemote, ActivateRemote,DeleteRemoteNumber
-from enum import auto, Enum
+from actions.actions import Action, EscapeAction, EnterRemoteNumber, ClearRemote, ActivateRemote,DeleteRemoteNumber
 from highlight import Highlight
 
 import tcod.event
@@ -14,11 +13,14 @@ class EventHandler(tcod.event.EventDispatch[Action]):
     def __init__(self, engine: Engine):
         self.engine = engine
 
-    def handle_events(self, context: tcod.context.Context) -> None:
+    def handle_events(self, context: tcod.context.Context, discard_events: bool) -> None:
         for event in tcod.event.get():
+
+            if discard_events == True:
+                continue
+
             context.convert_event(event)
             self.dispatch(event)
-            pass
 
     def ev_quit(self, event: tcod.event.Quit) -> None:
         raise SystemExit()
@@ -27,9 +29,13 @@ class EventHandler(tcod.event.EventDispatch[Action]):
         self.engine.render(root_console)
 
 class MainGameEventHandler(EventHandler):
-    def handle_events(self, context: tcod.context.Context) -> None:
+    def handle_events(self, context: tcod.context.Context, discard_events: bool) -> None:
         self.current_context = context
         for event in tcod.event.get():
+
+            if discard_events == True:
+                continue
+
             context.convert_event(event)
             actions = self.dispatch(event)
 
@@ -44,12 +50,9 @@ class MainGameEventHandler(EventHandler):
 
         key = event.sym
 
-        for section in self.engine.sections:
+        for section in self.engine.get_active_sections():
             if section.ui is not None:
                 section.ui.keydown(event)
-
-        if key == tcod.event.K_ESCAPE:
-            actions.append(EscapeAction(self.engine))
         """
         elif key == tcod.event.K_0:
             actions.append(EnterRemoteNumber(self.engine, 0))
@@ -83,7 +86,7 @@ class MainGameEventHandler(EventHandler):
     def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
         self.engine.mouse_location = self.current_context.pixel_to_tile(event.pixel.x, event.pixel.y)
 
-        for section in self.engine.sections:
+        for section in self.engine.get_active_sections():
             if section.ui is not None:
                 section.ui.mousemove(self.engine.mouse_location[0], self.engine.mouse_location[1])
 
@@ -93,7 +96,7 @@ class MainGameEventHandler(EventHandler):
         self.is_mouse_down = True
         self.mouse_down_location = self.engine.mouse_location
 
-        for section in self.engine.sections:
+        for section in self.engine.get_active_sections():
             if section.ui is not None:
                 section.ui.mousedown(self.engine.mouse_location[0], self.engine.mouse_location[1])
 

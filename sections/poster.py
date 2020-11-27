@@ -4,15 +4,12 @@ import numpy as np
 import xp_loader
 import gzip
 import tile_types
-from ui.answerUI import AnswersUI
 
-answer_panel_xp_file = 'images/answerPanel.xp'
-
-class Answers(Section):
-    def __init__(self, engine, x,y,width, height):
+class Poster(Section):
+     def __init__(self, engine, x, y, width, height, image):
         super().__init__(engine, x, y, width, height)
 
-        xp_file = gzip.open(answer_panel_xp_file)
+        xp_file = gzip.open(image)
         raw_data = xp_file.read()
         xp_file.close()
 
@@ -24,7 +21,4 @@ class Answers(Section):
             for w in range(0,self.width):
                 self.tiles[w,h]['graphic']=  xp_data['layer_data'][0]['cells'][w][h]
 
-        self.ui = AnswersUI(self, x,y, self.tiles["graphic"])
-        self.all_answers_correct = False
-                
-
+        self.invisible = True

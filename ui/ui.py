@@ -8,7 +8,7 @@ from highlight import Highlight
 import tcod.event
 import keyboard
 from threading import Timer
-from actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote
+from actions.actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote, CloseMenu, OpenMenu, EscapeAction
 
 class UI:
     def __init__(self, section, x, y):
@@ -42,8 +42,12 @@ class UI:
     def mousemove(self, x: int, y: int):
         for element in self.elements:
             if element.is_mouseover(x, y):
+                if element.mouseover == False:
+                    element.on_mouseenter()
                 element.mouseover = True
             else:
+                if element.mouseover == True:
+                    element.on_mouseleave()
                 element.mouseover = False
 
     def add_element(self, element):
@@ -51,102 +55,6 @@ class UI:
         element.y = element.y + self.y
         self.elements.append(element)
 
-class RemoteUI(UI):
-     def __init__(self, section, x, y, tiles):
-        super().__init__(section, x, y)
-        self.elements = list()
-        self.highlight = Highlight()
-
-        bd = [6, 4,3,3] #Button Dimensions
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        one_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 1), tiles=button_tiles )
-        self.add_element(one_button)
-
-        bd = [9,4,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        two_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 2), tiles=button_tiles )
-        self.add_element(two_button)
-
-        bd = [12,4,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        three_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 3), tiles=button_tiles )
-        self.add_element(three_button)
-
-        bd = [6,7,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        four_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 4), tiles=button_tiles )
-        self.add_element(four_button)
-
-        bd = [9,7,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        five_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 5), tiles=button_tiles )
-        self.add_element(five_button)
-
-        bd = [12,7,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        six_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 6), tiles=button_tiles )
-        self.add_element(six_button)
-
-        bd = [6,10,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        seven_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 7), tiles=button_tiles )
-        self.add_element(seven_button)
-
-        bd = [9,10,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        eight_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 8), tiles=button_tiles )
-        self.add_element(eight_button)
-
-        bd = [12,10,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        nine_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 9), tiles=button_tiles )
-        self.add_element(nine_button)
-
-        bd = [6,13,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        clear_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ClearRemote(self.section.engine), tiles=button_tiles )
-        self.add_element(clear_button)
-
-        bd = [9,13,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        zero_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=EnterRemoteNumber(self.section.engine, 0), tiles=button_tiles )
-        self.add_element(zero_button)
-
-        bd = [12,13,3,3]
-        button_tiles = tiles[bd[0]:bd[0] + bd[2], bd[1]:bd[1] + bd[3]]
-        go_button = Button(x=bd[0], y=bd[1], width=bd[2], height=bd[3], click_action=ActivateRemote(self.section.engine), tiles=button_tiles )
-        self.add_element(go_button)
-        
-class AnswersUI(UI):
-    def __init__(self, section, x, y, tiles):
-        super().__init__(section, x, y)
-        self.elements = list()
-        self.highlight = Highlight()
-
-        idim = [3,4,16,1] #Input dimensions
-        input_one = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
-        self.add_element(input_one)
-
-        idim = [3,6,16,1]
-        input_two = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
-        self.add_element(input_two)
-
-        idim = [3,12,16,1]
-        input_three = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
-        self.add_element(input_three)
-
-        idim = [3,18,16,1]
-        input_four = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
-        self.add_element(input_four)
-
-        idim = [3,24,16,1]
-        input_five = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
-        self.add_element(input_five)
-
-        idim = [3,29,16,1]
-        input_six = Input(x=idim[0], y=idim[1], width=idim[2], height=idim[3])
-        self.add_element(input_six)
-        
 class UIElement:
     def __init__(self, x, y, width, height):
         self.x = x
@@ -156,10 +64,16 @@ class UIElement:
         self.mouseover = False
         pass
 
-    def render(self):
-        raise NotImplementedError()
+    def render(self, console: Console):
+        pass
 
     def on_keydown(self, event: tcod.event.KeyDown):
+        pass
+
+    def on_mouseenter(self):
+        pass
+
+    def on_mouseleave(self):
         pass
 
     def is_mouseover(self, x: int, y: int):
@@ -183,13 +97,13 @@ class Button(UIElement):
 
         for w in range(0,self.width):
             for h in range(0, self.height):
-                if self.tiles[h,w][0] != 9488:
+                if self.tiles[w,h][0] != 9488:
                     if self.mouseover:
-                        self.tiles[h,w][1] = self.highlight_bg
+                        self.tiles[w,h][1] = self.highlight_bg
                     else:
-                        self.tiles[h,w][1] = self.normal_bg 
+                        self.tiles[w,h][1] = self.normal_bg 
 
-                temp_console.tiles_rgb[w,h] = self.tiles[h,w]
+                temp_console.tiles_rgb[h,w] = self.tiles[w,h]
        
         temp_console.blit(console, self.x, self.y)
 
@@ -248,7 +162,37 @@ class Input(UIElement):
                     letter = letter.capitalize()
                 self.text += letter
 
+class CheckedInput(Input):
+    def __init__(self, x: int, y: int, width: int, height: int, check_string: str, completion_action: Action):
+        super().__init__(x,y,width,height)
+        self.check_string = check_string
+        self.input_correct = False
+        self.completion_action = completion_action
 
+    def on_keydown(self, event):
+        super().on_keydown(event)
+
+        if self.text.capitalize() == self.check_string.capitalize():
+            self.input_correct = True
+            self.completion_action.perform()
+        else:
+            self.input_correct = False
+
+class HoverTrigger(UIElement):
+    def __init__(self, x: int, y: int, width: int, height: int, mouse_enter_action : Action, mouse_leave_action: Action):
+        super().__init__(x,y,width,height)
+        self.mouse_enter_action = mouse_enter_action
+        self.mouse_leave_action = mouse_leave_action
+
+    def on_mouseenter(self):
+        self.mouse_enter_action.perform()
+        
+    def on_mouseleave(self):
+        self.mouse_leave_action.perform()
+
+    def on_mousedown(self):
+        pass
+    
 
 def get_letter_key(key):
     if key == tcod.event.K_a:
