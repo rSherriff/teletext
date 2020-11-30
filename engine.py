@@ -43,8 +43,8 @@ class Engine:
         self.menu = Menu(self, 0,0, screen_width + remote_width + answer_panel_width, answer_panel_height)
 
         self.page_manager = PageManager(self, 0,0, screen_width, screen_height)
-        self.remote = Remote(self, screen_width + 1, 0, remote_width, remote_height)
-        self.answers = Answers(self, screen_width + remote_width + 1, 0, answer_panel_width, answer_panel_height)
+        self.remote_section = Remote(self, screen_width + 1, 0, remote_width, remote_height)
+        self.answer_section = Answers(self, screen_width + remote_width + 1, 0, answer_panel_width, answer_panel_height)
 
         self.full_screen_effect = VerticalWipeEffect(self, 0, 0, 87, 32)
 
@@ -54,8 +54,8 @@ class Engine:
 
         self.game_sections = list()
         self.game_sections.append(self.page_manager)
-        self.game_sections.append(self.remote)
-        self.game_sections.append(self.answers)
+        self.game_sections.append(self.remote_section)
+        self.game_sections.append(self.answer_section)
 
         self.q1_tooltip = Poster(self,50,3, 26, 10, "images/questionOnePoster.xp")
         self.q2_tooltip = Poster(self,50,11, 26, 10, "images/questionFourPoster.xp")
@@ -109,9 +109,10 @@ class Engine:
         self.state = GameState.MENU
         self.full_screen_effect.start(VerticalWipeDirection.UP)
       
-    def correct_answer_given(self, answer_number):
+    def correct_answer_given(self, question: str):
         playsound("sounds/correct_answer.wav", False)
-        print("Correct answer given for question {0}".format(answer_number))
+        self.answer_section.answer_correct(question)
+        print("Correct answer given for question {0}".format(question))
 
     def show_tooltip(self, key):
         self.tooltips[key].invisible = False

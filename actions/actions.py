@@ -31,19 +31,19 @@ class EnterRemoteNumber(Action):
         self.number = number
 
     def perform(self) -> None:
-        self.engine.remote.add_number(self.number)
+        self.engine.remote_section.add_number(self.number)
 
 class ClearRemote(Action):
     def perform(self) -> None:
-        self.engine.remote.clear()
+        self.engine.remote_section.clear()
 
 class ActivateRemote(Action):
     def perform(self) -> None:
-        self.engine.remote.activate()
+        self.engine.remote_section.activate()
 
 class DeleteRemoteNumber(Action):
     def perform(self) -> None:
-        self.engine.remote.delete_number()
+        self.engine.remote_section.delete_number()
 
 class CloseMenu(Action):
     def perform(self) -> None:
@@ -54,12 +54,12 @@ class OpenMenu(Action):
         self.engine.open_menu()
 
 class AnswerCorrect(Action):
-    def __init__(self, engine, answer_number: int) -> None:
+    def __init__(self, engine, question: str) -> None:
         super().__init__(engine)
-        self.answer_number = answer_number
+        self.question = question
 
     def perform(self):
-        self.engine.correct_answer_given(self.answer_number)
+        self.engine.correct_answer_given(self.question)
 
 class ShowTooltip(Action):
     def __init__(self, engine, tooltip_key: str) -> None:
