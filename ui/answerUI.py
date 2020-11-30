@@ -1,7 +1,7 @@
 from ui.ui import UI
 from ui.ui import CheckedInput, HoverTrigger
 
-from actions.actions import AnswerCorrect, ShowQuestionTooltip, HideQuestionTooltip
+from actions.actions import AnswerCorrect, ShowTooltip, HideTooltip
 
 class AnswersUI(UI):
     def __init__(self, section, x, y, tiles):
@@ -33,21 +33,21 @@ class AnswersUI(UI):
         self.add_element(input_six)     
 
         hdim = [1,2,12,1]   
-        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowQuestionTooltip(self.section.engine, 1), mouse_leave_action=HideQuestionTooltip(self.section.engine, 1))
+        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q1'), mouse_leave_action=HideTooltip(self.section.engine, 'q1'))
         self.add_element(hover_one)
 
         hdim = [1,10,12,1]   
-        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowQuestionTooltip(self.section.engine, 2), mouse_leave_action=HideQuestionTooltip(self.section.engine, 2))
+        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q2'), mouse_leave_action=HideTooltip(self.section.engine, 'q2'))
         self.add_element(hover_one)
 
         hdim = [1,16,12,1]   
-        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowQuestionTooltip(self.section.engine, 3), mouse_leave_action=HideQuestionTooltip(self.section.engine, 3))
+        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q3'), mouse_leave_action=HideTooltip(self.section.engine, 'q3'))
         self.add_element(hover_one)
 
         hdim = [1,22,12,1]   
-        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowQuestionTooltip(self.section.engine, 4), mouse_leave_action=HideQuestionTooltip(self.section.engine, 4))
+        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q4'), mouse_leave_action=HideTooltip(self.section.engine, 'q4'))
         self.add_element(hover_one)
 
         hdim = [1,27,12,1]   
-        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowQuestionTooltip(self.section.engine, 5), mouse_leave_action=HideQuestionTooltip(self.section.engine, 5))
+        hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q5'), mouse_leave_action=HideTooltip(self.section.engine, 'q5'))
         self.add_element(hover_one)

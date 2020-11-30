@@ -48,13 +48,6 @@ class Engine:
 
         self.full_screen_effect = VerticalWipeEffect(self, 0, 0, 87, 32)
 
-        #Posters
-        self.question_one_poster = Poster(self,50,3, 26, 10, "images/questionOnePoster.xp")
-        self.question_two_poster = Poster(self,50,11, 26, 10, "images/questionFourPoster.xp")
-        self.question_three_poster = Poster(self,50,17, 26, 10, "images/questionTwoPoster.xp")
-        self.question_four_poster = Poster(self,50,15, 26, 7, "images/questionThreePoster.xp")
-        self.question_five_poster = Poster(self,50,14, 26, 12, "images/questionFivePoster.xp")
-
         #Section Setup
         self.menu_sections = list()
         self.menu_sections.append(self.menu)
@@ -63,11 +56,19 @@ class Engine:
         self.game_sections.append(self.page_manager)
         self.game_sections.append(self.remote)
         self.game_sections.append(self.answers)
-        self.game_sections.append(self.question_one_poster)
-        self.game_sections.append(self.question_two_poster)
-        self.game_sections.append(self.question_three_poster)
-        self.game_sections.append(self.question_four_poster)
-        self.game_sections.append(self.question_five_poster)
+
+        self.q1_tooltip = Poster(self,50,3, 26, 10, "images/questionOnePoster.xp")
+        self.q2_tooltip = Poster(self,50,11, 26, 10, "images/questionFourPoster.xp")
+        self.q3_tooltip = Poster(self,50,17, 26, 10, "images/questionTwoPoster.xp")
+        self.q4_tooltip = Poster(self,50,15, 26, 7, "images/questionThreePoster.xp")
+        self.q5_tooltip = Poster(self,50,14, 26, 12, "images/questionFivePoster.xp")
+
+        self.tooltips = {}
+        self.tooltips['q1'] = (self.q1_tooltip)
+        self.tooltips['q2'] = (self.q2_tooltip)
+        self.tooltips['q3'] = (self.q3_tooltip)
+        self.tooltips['q4'] = (self.q4_tooltip)
+        self.tooltips['q5'] = (self.q5_tooltip)
 
         self.state = GameState.MENU
 
@@ -76,6 +77,9 @@ class Engine:
         """ Renders the game to console """
         for section in self.get_active_sections():
             section.render(root_console)
+
+        for tooltip in self.tooltips.values():
+            tooltip.render(root_console)
 
         if self.full_screen_effect.in_effect == True:
             self.full_screen_effect.render(root_console)
@@ -109,27 +113,9 @@ class Engine:
         playsound("sounds/correct_answer.wav", False)
         print("Correct answer given for question {0}".format(answer_number))
 
-    def show_question_tooltip(self, question_number):
-        if question_number == 1:
-            self.question_one_poster.invisible = False
-        elif question_number == 2:
-            self.question_two_poster.invisible = False
-        elif question_number == 3:
-            self.question_three_poster.invisible = False
-        elif question_number == 4:
-            self.question_four_poster.invisible = False
-        elif question_number == 5:
-            self.question_five_poster.invisible = False
+    def show_tooltip(self, key):
+        self.tooltips[key].invisible = False
 
-    def hide_question_tooltip(self, question_number):
-        if question_number == 1:
-            self.question_one_poster.invisible = True
-        elif question_number == 2:
-            self.question_two_poster.invisible = True
-        elif question_number == 3:
-            self.question_three_poster.invisible = True
-        elif question_number == 4:
-            self.question_four_poster.invisible = True
-        elif question_number == 5:
-            self.question_five_poster.invisible = True
+    def hide_tooltip(self, key):
+        self.tooltips[key].invisible = True
         
