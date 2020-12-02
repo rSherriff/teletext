@@ -182,7 +182,7 @@ class CheckedInput(Input):
         if self.completion_effect.in_effect is True:
             self.completion_effect.render(console)
         elif self.input_correct == True:
-            #Completion struff that we need one render loop after completion before we trigger
+            #Completion stuff that we need one render loop after completion before we trigger
             self.bg_colour = self.completion_colour
             self.completion_effect.start(HorizontalWipeDirection.RIGHT)
             self.completion_effect.in_effect = True

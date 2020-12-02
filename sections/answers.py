@@ -31,27 +31,6 @@ class Answers(Section):
         self.ui = AnswersUI(self, x,y, self.tiles["graphic"], self.correct_colour)
         self.all_answers_correct = False
 
-        """
-        self.answer_areas = {}
-        self.answer_areas['q1'] = (3, 4, 16, 1)
-
-        self.effects = {}
-        self.effects['q1'] = HorizontalWipeEffect(self, 3, 4, 16, 1)
-        """
-
-    def render(self, root_console):
-        super().render(root_console)
-
-        """
-        for effect in self.effects.values():
-            if effect.in_effect == True:
-                effect.render(root_console)
-            else:
-                effect.set_tiles(root_console.tiles_rgb[effect.x : effect.x + effect.width, effect.y: effect.y + effect.height])
-        """
-
 
     def answer_correct(self, question : str):
-        #self.effects[question].start(HorizontalWipeDirection.LEFT)
-        #self.tiles[self.effects[question].x : self.effects[question].x + self.effects[question].width, self.effects[question].y: self.effects[question].y + self.effects[question].height]['graphic']['bg'] = self.correct_colour
         pass
