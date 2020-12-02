@@ -44,7 +44,7 @@ class AnswersUI(UI):
         hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q1'), mouse_leave_action=HideTooltip(self.section.engine, 'q1'))
         self.add_element(hover_one)
 
-        hdim = [1,10,12,1]   
+        hdim = [1,10,18,1]   
         hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q2'), mouse_leave_action=HideTooltip(self.section.engine, 'q2'))
         self.add_element(hover_one)
 
@@ -52,10 +52,10 @@ class AnswersUI(UI):
         hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q3'), mouse_leave_action=HideTooltip(self.section.engine, 'q3'))
         self.add_element(hover_one)
 
-        hdim = [1,22,12,1]   
+        hdim = [1,22,24,1]   
         hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q4'), mouse_leave_action=HideTooltip(self.section.engine, 'q4'))
         self.add_element(hover_one)
 
-        hdim = [1,27,12,1]   
+        hdim = [1,27,6,1]   
         hover_one = HoverTrigger(x=hdim[0], y=hdim[1], width=hdim[2], height=hdim[3], mouse_enter_action=ShowTooltip(self.section.engine, 'q5'), mouse_leave_action=HideTooltip(self.section.engine, 'q5'))
         self.add_element(hover_one)

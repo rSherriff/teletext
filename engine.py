@@ -57,11 +57,11 @@ class Engine:
         self.game_sections.append(self.remote_section)
         self.game_sections.append(self.answer_section)
 
-        self.q1_tooltip = Poster(self,50,3, 26, 10, "images/questionOnePoster.xp")
-        self.q2_tooltip = Poster(self,50,11, 26, 10, "images/questionFourPoster.xp")
-        self.q3_tooltip = Poster(self,50,17, 26, 10, "images/questionTwoPoster.xp")
-        self.q4_tooltip = Poster(self,50,15, 26, 7, "images/questionThreePoster.xp")
-        self.q5_tooltip = Poster(self,50,14, 26, 12, "images/questionFivePoster.xp")
+        self.q1_tooltip = Poster(self,50,3, 28, 10, "images/questionOnePoster.xp")
+        self.q2_tooltip = Poster(self,50,11, 28, 8, "images/questionFourPoster.xp")
+        self.q3_tooltip = Poster(self,50,17, 27, 12, "images/questionTwoPoster.xp")
+        self.q4_tooltip = Poster(self,50,15, 24, 7, "images/questionThreePoster.xp")
+        self.q5_tooltip = Poster(self,50,14, 28, 13, "images/questionFivePoster.xp")
 
         self.tooltips = {}
         self.tooltips['q1'] = (self.q1_tooltip)

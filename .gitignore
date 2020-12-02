@@ -5,3 +5,5 @@ __pycache__/*
 sections/__pycache__/*
 
 *.pyc
+build/*
+*.spec
