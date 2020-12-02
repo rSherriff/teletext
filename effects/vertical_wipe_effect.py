@@ -28,8 +28,8 @@ class VerticalWipeEffect(Effect):
 
         temp_console = Console(width=self.width, height=self.height, order="F")
 
-        for x in range(self.x, self.x + self.width):
-            for y in range(self.y, self.y + self.height):
+        for x in range(0, self.width):
+            for y in range(0, self.height):
                 temp_console.tiles_rgb[x,y] = self.tiles[x,y]
 
         temp_console.blit(console, src_x=self.x, src_y=self.y , dest_x=0, dest_y=0 + int(self.current_wipe_height), width=self.width, height=self.height - int(self.current_wipe_height))

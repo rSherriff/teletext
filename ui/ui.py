@@ -10,6 +10,8 @@ import keyboard
 from threading import Timer
 from actions.actions import Action, EnterRemoteNumber, ClearRemote, ActivateRemote, CloseMenu, OpenMenu, EscapeAction
 
+from effects.horizontal_wipe_effect import HorizontalWipeEffect, HorizontalWipeDirection
+
 class UI:
     def __init__(self, section, x, y):
         self.elements = list()
@@ -116,16 +118,19 @@ class Input(UIElement):
         self.selected = False
         self.text = ''
         self.blink_interval = 0.7
+        self.bg_colour = (0,0,0)
 
     def render(self, console: Console):
         temp_console = Console(width=self.width, height=self.height)
         for w in range(0,self.width):
             if w < len(self.text):
-                temp_console.tiles_rgb[0,w] = (ord(self.text[w]), (255,255,255), (0,0,0))
+                temp_console.tiles_rgb[0,w] = (ord(self.text[w]), (255,255,255), self.bg_colour)
+            else:
+                temp_console.tiles_rgb[0,w] = (ord(' '), (255,255,255), self.bg_colour)
 
         if self.selected == True:
             if self.blink == True:
-                temp_console.tiles_rgb[0,len(self.text)] = (9488, (255,255,255), (0,0,0))
+                temp_console.tiles_rgb[0,len(self.text)] = (9488, (255,255,255), self.bg_colour)
 
         temp_console.blit(console, self.x, self.y)
 
@@ -163,20 +168,35 @@ class Input(UIElement):
                 self.text += letter
 
 class CheckedInput(Input):
-    def __init__(self, x: int, y: int, width: int, height: int, check_string: str, completion_action: Action):
+    def __init__(self, x: int, y: int, width: int, height: int, check_string: str, completion_action: Action, completion_colour : (), completion_effect : HorizontalWipeEffect):
         super().__init__(x,y,width,height)
         self.check_string = check_string
         self.input_correct = False
         self.completion_action = completion_action
+        self.completion_colour = completion_colour
+        self.completion_effect = completion_effect
+
+    def render(self, console: Console):
+        super().render(console)
+
+        if self.completion_effect.in_effect is True:
+            self.completion_effect.render(console)
+        elif self.input_correct == True:
+            #Completion struff that we need one render loop after completion before we trigger
+            self.bg_colour = self.completion_colour
+            self.completion_effect.start(HorizontalWipeDirection.RIGHT)
+            self.completion_effect.in_effect = True
+            self.completion_effect.set_tiles(console.tiles_rgb[self.x: self.x+self.width, self.y: self.y+self.height])
 
     def on_keydown(self, event):
-        super().on_keydown(event)
+        if self.selected == True:
+            super().on_keydown(event)
 
-        if self.text.capitalize() == self.check_string.capitalize():
-            self.input_correct = True
-            self.completion_action.perform()
-        else:
-            self.input_correct = False
+            if self.text.capitalize() == self.check_string.capitalize():
+                self.input_correct = True
+                self.completion_action.perform()
+            else:
+                self.input_correct = False
 
 class HoverTrigger(UIElement):
     def __init__(self, x: int, y: int, width: int, height: int, mouse_enter_action : Action, mouse_leave_action: Action):
