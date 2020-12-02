@@ -12,32 +12,32 @@ class AnswersUI(UI):
 
         idim = [3,4,16,1] #Input dimensions
         effect = HorizontalWipeEffect(self.section.engine, x=idim[0] + 62, y=idim[1], width=idim[2], height=idim[3])
-        input_one = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Richard Holmes', completion_action=AnswerCorrect(self.section.engine, 'q1'), completion_colour=self.correct_colour, completion_effect=effect)
+        input_one = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Richard Holmes', trigger_once = True, completion_action=AnswerCorrect(self.section.engine, 'q1'), completion_colour=self.correct_colour, completion_effect=effect)
         self.add_element(input_one)
 
         idim = [3,6,16,1]
         effect = HorizontalWipeEffect(self.section.engine, x=idim[0] + 62, y=idim[1], width=idim[2], height=idim[3])
-        input_two = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Judy Langsford', completion_action=AnswerCorrect(self.section.engine, 'q2'), completion_colour=self.correct_colour, completion_effect=effect)
+        input_two = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Judy Langsford', trigger_once = True, completion_action=AnswerCorrect(self.section.engine, 'q2'), completion_colour=self.correct_colour, completion_effect=effect)
         self.add_element(input_two)
 
         idim = [3,12,16,1]
         effect = HorizontalWipeEffect(self.section.engine, x=idim[0] + 62, y=idim[1], width=idim[2], height=idim[3])
-        input_three = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Robert Dolan', completion_action=AnswerCorrect(self.section.engine, 'q3'), completion_colour=self.correct_colour, completion_effect=effect)
+        input_three = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Robert Dolan', trigger_once = True, completion_action=AnswerCorrect(self.section.engine, 'q3'), completion_colour=self.correct_colour, completion_effect=effect)
         self.add_element(input_three)
 
         idim = [3,18,16,1]
         effect = HorizontalWipeEffect(self.section.engine, x=idim[0] + 62, y=idim[1], width=idim[2], height=idim[3])
-        input_four = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Cat Grant', completion_action=AnswerCorrect(self.section.engine, 'q4'), completion_colour=self.correct_colour, completion_effect=effect)
+        input_four = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Cat Grant', trigger_once = True, completion_action=AnswerCorrect(self.section.engine, 'q4'), completion_colour=self.correct_colour, completion_effect=effect)
         self.add_element(input_four)
 
         idim = [3,24,16,1]
         effect = HorizontalWipeEffect(self.section.engine, x=idim[0] + 62, y=idim[1], width=idim[2], height=idim[3])
-        input_five = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Angelica Osman', completion_action=AnswerCorrect(self.section.engine, 'q5'), completion_colour=self.correct_colour, completion_effect=effect)
+        input_five = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Angelica Osman', trigger_once = True, completion_action=AnswerCorrect(self.section.engine, 'q5'), completion_colour=self.correct_colour, completion_effect=effect)
         self.add_element(input_five)
 
         idim = [3,29,16,1]
         effect = HorizontalWipeEffect(self.section.engine, x=idim[0] + 62, y=idim[1], width=idim[2], height=idim[3])
-        input_six = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Steven Kielty', completion_action=AnswerCorrect(self.section.engine, 'q6'), completion_colour=self.correct_colour, completion_effect=effect)
+        input_six = CheckedInput(x=idim[0], y=idim[1], width=idim[2], height=idim[3], check_string='Steven Kielty', trigger_once = True, completion_action=AnswerCorrect(self.section.engine, 'q6'), completion_colour=self.correct_colour, completion_effect=effect)
         self.add_element(input_six)     
 
         hdim = [1,2,12,1]   

@@ -168,13 +168,14 @@ class Input(UIElement):
                 self.text += letter
 
 class CheckedInput(Input):
-    def __init__(self, x: int, y: int, width: int, height: int, check_string: str, completion_action: Action, completion_colour : (), completion_effect : HorizontalWipeEffect):
+    def __init__(self, x: int, y: int, width: int, height: int, check_string: str, trigger_once : bool, completion_action: Action, completion_colour : (), completion_effect : HorizontalWipeEffect):
         super().__init__(x,y,width,height)
         self.check_string = check_string
         self.input_correct = False
         self.completion_action = completion_action
         self.completion_colour = completion_colour
         self.completion_effect = completion_effect
+        self.trigger_once = trigger_once
 
     def render(self, console: Console):
         super().render(console)
@@ -188,13 +189,22 @@ class CheckedInput(Input):
             self.completion_effect.in_effect = True
             self.completion_effect.set_tiles(console.tiles_rgb[self.x: self.x+self.width, self.y: self.y+self.height])
 
+    def on_mousedown(self):
+        if self.input_correct == False or self.input_correct == True and self.trigger_once == False :
+            self.selected = True
+            self.blink_on()
+
     def on_keydown(self, event):
         if self.selected == True:
             super().on_keydown(event)
 
-            if self.text.capitalize() == self.check_string.capitalize():
-                self.input_correct = True
-                self.completion_action.perform()
+            if self.text.capitalize() == self.check_string.capitalize(): #Check the input is correct
+                if self.trigger_once == True and self.input_correct == False: #Check whether we only trigger once and has the input been correct before
+                    self.input_correct = True
+                    self.completion_action.perform()
+
+                    if self.trigger_once == True:
+                        self.selected = False
             else:
                 self.input_correct = False
 
