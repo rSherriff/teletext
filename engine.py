@@ -34,19 +34,18 @@ class Engine:
         remote_width = 21
         remote_height = 24
 
-        answer_panel_width = 25
-        answer_panel_height = 32
+        answer_panel_height = 11
 
         self.event_handler: EventHandler = MainGameEventHandler(self)
         self.mouse_location = (0, 0)
 
-        self.menu = Menu(self, 0,0, screen_width + remote_width + answer_panel_width, answer_panel_height)
+        self.menu = Menu(self, 0,0, screen_width + remote_width,screen_height + answer_panel_height )
 
         self.page_manager = PageManager(self, 0,0, screen_width, screen_height)
         self.remote_section = Remote(self, screen_width + 1, 0, remote_width, remote_height)
-        self.answer_section = Answers(self, screen_width + remote_width + 1, 0, answer_panel_width, answer_panel_height)
+        self.answer_section = Answers(self, 0, screen_height, screen_width + remote_width + 2, answer_panel_height)
 
-        self.full_screen_effect = VerticalWipeEffect(self, 0, 0, 87, 32)
+        self.full_screen_effect = VerticalWipeEffect(self, 0, 0, 64, 35)
 
         #Section Setup
         self.menu_sections = list()
@@ -57,11 +56,11 @@ class Engine:
         self.game_sections.append(self.remote_section)
         self.game_sections.append(self.answer_section)
 
-        self.q1_tooltip = Poster(self,50,3, 28, 10, "images/questionOnePoster.xp")
-        self.q2_tooltip = Poster(self,50,11, 28, 8, "images/questionFourPoster.xp")
-        self.q3_tooltip = Poster(self,50,17, 27, 12, "images/questionTwoPoster.xp")
-        self.q4_tooltip = Poster(self,50,15, 24, 7, "images/questionThreePoster.xp")
-        self.q5_tooltip = Poster(self,50,14, 28, 13, "images/questionFivePoster.xp")
+        self.q1_tooltip = Poster(self,20,16, 28, 10, "images/questionOnePoster.xp")
+        self.q2_tooltip = Poster(self,4,18, 28, 8, "images/questionFourPoster.xp")
+        self.q3_tooltip = Poster(self,4,20, 27, 11, "images/questionTwoPoster.xp")
+        self.q4_tooltip = Poster(self,29,19, 24, 7, "images/questionThreePoster.xp")
+        self.q5_tooltip = Poster(self,29,18, 28, 13, "images/questionFivePoster.xp")
 
         self.tooltips = {}
         self.tooltips['q1'] = (self.q1_tooltip)

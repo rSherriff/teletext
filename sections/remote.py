@@ -34,8 +34,8 @@ class Remote(Section):
             for w in range(0,self.width):
                  self.tiles[w,h]['graphic']=  xp_data['layer_data'][0]['cells'][w][h]
 
-        self.first_digit_pos = [9,2]
-        self.error_message_pos = [4,18]
+        self.first_digit_pos = [10,5]
+        self.error_message_pos = [4,21]
         self.num_digits = 0
         self.selected_number = [0,0,0]
 
