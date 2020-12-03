@@ -25,7 +25,7 @@ class PageManager(Section):
         self.pages['105']=Page('images/105.xp')
         self.pages['106']=Page('images/106.xp')
         self.pages['107']=Page('images/107.xp')
-        self.pages['115']=Page('images/115.xp')
+        self.pages['115']=Page('images/weatherMap.xp')
         self.pages['116']=Page('images/116.xp')
         self.pages['120']=Page('images/120.xp')
 
