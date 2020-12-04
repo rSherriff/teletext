@@ -15,7 +15,8 @@ from sections.page_manager import PageManager
 from sections.remote import Remote
 from sections.poster import Poster
 
-from effects.vertical_wipe_effect import VerticalWipeEffect, VerticalWipeDirection
+
+from effects.melt_effect import MeltWipeEffect, MeltWipeEffectType
 
 from playsound import playsound
 
@@ -45,7 +46,7 @@ class Engine:
         self.remote_section = Remote(self, screen_width + 1, 0, remote_width, remote_height)
         self.answer_section = Answers(self, 0, screen_height, screen_width + remote_width + 2, answer_panel_height)
 
-        self.full_screen_effect = VerticalWipeEffect(self, 0, 0, 64, 35)
+        self.full_screen_effect = MeltWipeEffect(self, 0, 0, 64, 35, MeltWipeEffectType.RANDOM)
 
         #Section Setup
         self.menu_sections = list()
@@ -102,11 +103,11 @@ class Engine:
 
     def close_menu(self):
         self.state = GameState.IN_GAME
-        self.full_screen_effect.start(VerticalWipeDirection.DOWN)
+        self.full_screen_effect.start()
 
     def open_menu(self):
         self.state = GameState.MENU
-        self.full_screen_effect.start(VerticalWipeDirection.UP)
+        self.full_screen_effect.start()
       
     def correct_answer_given(self, question: str):
         playsound("sounds/correct_answer.wav", False)
