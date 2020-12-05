@@ -46,7 +46,7 @@ class Engine:
         self.remote_section = Remote(self, screen_width + 1, 0, remote_width, remote_height)
         self.answer_section = Answers(self, 0, screen_height, screen_width + remote_width + 2, answer_panel_height)
 
-        self.full_screen_effect = MeltWipeEffect(self, 0, 0, 64, 35, MeltWipeEffectType.RANDOM)
+        self.full_screen_effect = MeltWipeEffect(self, 0, 0, 64, 35, MeltWipeEffectType.RANDOM, 100)
 
         #Section Setup
         self.menu_sections = list()

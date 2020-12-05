@@ -12,10 +12,10 @@ class MeltWipeEffectType(Enum):
     RANDOM = auto()
 
 class MeltWipeEffect(Effect):
-    def __init__(self, engine, x, y, width, height, type: MeltWipeEffectType):
+    def __init__(self, engine, x, y, width, height, type: MeltWipeEffectType, lifespan: int):
         super().__init__(engine,x,y,width,height)
         
-        self.lifespan = 25
+        self.lifespan = lifespan
         self.type = type
 
         self.col_trigger_times = np.empty(width)
@@ -26,7 +26,7 @@ class MeltWipeEffect(Effect):
             elif self.type == MeltWipeEffectType.WAVE_RIGHT:
                 self.col_trigger_times[-col - 1] = wave_step * col
             elif self.type == MeltWipeEffectType.RANDOM:
-                self.col_trigger_times[col] = wave_step * randrange(30)
+                self.col_trigger_times[col] = wave_step * randrange(int(self.lifespan / 3))
         
     def start(self):
         super().start()
@@ -34,14 +34,15 @@ class MeltWipeEffect(Effect):
         self.current_wipe_heights.fill(0)
         
     def render(self, console):
-        if self.time_alive > self.lifespan:
-            self.stop()
 
+        columns_finished = True        
         
         for col in range(0, self.width):
-
             if self.time_alive > self.col_trigger_times[col]:
-                self.current_wipe_heights[col] += 0.5
+                self.current_wipe_heights[col] += self.height / self.lifespan
+
+            if self.current_wipe_heights[col] < self.height:
+                columns_finished = False
 
             temp_console = Console(width=1, height=self.height, order="F")
 
@@ -51,4 +52,9 @@ class MeltWipeEffect(Effect):
             temp_console.blit(console, src_x=0, src_y=0,
                                         dest_x=col, dest_y= int(self.current_wipe_heights[col]), 
                                         width=1, height=self.height - int(self.current_wipe_heights[col]))
+
         self.time_alive += 0.16
+        if columns_finished == True:
+            self.stop()
+
+        
