@@ -2,29 +2,29 @@ from __future__ import annotations
 
 import time
 from enum import Enum, auto
+from threading import Timer
 from typing import TYPE_CHECKING
 
 import numpy as np
+import tcod
+from playsound import playsound
 from tcod.console import Console
 
 import tile_types
+from effects.melt_effect import MeltWipeEffect, MeltWipeEffectType
 from input_handlers import EventHandler, MainGameEventHandler
 from sections.answers import Answers
+from sections.completion_section import CompleteSection
 from sections.menu import Menu
 from sections.page_manager import PageManager
-from sections.remote import Remote
 from sections.poster import Poster
+from sections.remote import Remote
 
-
-from effects.melt_effect import MeltWipeEffect, MeltWipeEffectType
-
-from playsound import playsound
-
-import tcod
 
 class GameState(Enum):
     MENU = auto()
     IN_GAME = auto()
+    COMPLETE = auto()
 
 class Engine:
     def __init__(self):
@@ -57,6 +57,9 @@ class Engine:
         self.game_sections.append(self.remote_section)
         self.game_sections.append(self.answer_section)
 
+        self.completion_sections = list()
+        self.completion_sections.append(CompleteSection(self, 0,0, screen_width + remote_width,screen_height + answer_panel_height))
+
         self.q1_tooltip = Poster(self,20,16, 28, 10, "images/questionOnePoster.xp")
         self.q2_tooltip = Poster(self,4,18, 28, 8, "images/questionFourPoster.xp")
         self.q3_tooltip = Poster(self,4,20, 27, 11, "images/questionTwoPoster.xp")
@@ -69,6 +72,14 @@ class Engine:
         self.tooltips['q3'] = (self.q3_tooltip)
         self.tooltips['q4'] = (self.q4_tooltip)
         self.tooltips['q5'] = (self.q5_tooltip)
+
+        self.completion_criteria = {}
+        self.completion_criteria['q1'] = False
+        self.completion_criteria['q2'] = False
+        self.completion_criteria['q3'] = False
+        self.completion_criteria['q4'] = False
+        self.completion_criteria['q5'] = False
+        self.completion_criteria['q6'] = False
 
         self.state = GameState.MENU
 
@@ -100,6 +111,8 @@ class Engine:
             return self.menu_sections
         elif self.state == GameState.IN_GAME:
             return self.game_sections
+        elif self.state == GameState.COMPLETE:
+            return self.completion_sections
 
     def close_menu(self):
         self.state = GameState.IN_GAME
@@ -108,11 +121,20 @@ class Engine:
     def open_menu(self):
         self.state = GameState.MENU
         self.full_screen_effect.start()
+
+    def complete_game(self):
+        self.state = GameState.COMPLETE
+        self.full_screen_effect.start()
       
     def correct_answer_given(self, question: str):
         playsound("sounds/correct_answer.wav", False)
         self.answer_section.answer_correct(question)
-        print("Correct answer given for question {0}".format(question))
+        self.completion_criteria[question] = True
+        if all(i == True for i in self.completion_criteria.values()):
+            self.full_screen_effect.lifespan = 200
+            playsound("sounds/completion_music.wav", False)
+            Timer(2, self.complete_game).start()
+            
 
     def show_tooltip(self, key):
         self.tooltips[key].invisible = False
