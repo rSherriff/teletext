@@ -52,7 +52,7 @@ class PageManager(Section):
         self.pages['405']=Page('images/405.xp')
         self.pages['406']=Page('images/406.xp')
         self.pages['501']=Page('images/letters.xp')
-        self.pages['601']=Page('images/judyProgram.xp')
+        self.pages['601']=Page('images/gangway.xp')
         
         self.active_page_key = '100'
         self.active_page = self.pages[self.active_page_key]
