@@ -119,18 +119,19 @@ class Input(UIElement):
         self.text = ''
         self.blink_interval = 0.7
         self.bg_colour = (0,0,0)
+        self.fg_colour = (255,255,255)
 
     def render(self, console: Console):
         temp_console = Console(width=self.width, height=self.height)
         for w in range(0,self.width):
             if w < len(self.text):
-                temp_console.tiles_rgb[0,w] = (ord(self.text[w]), (255,255,255), self.bg_colour)
+                temp_console.tiles_rgb[0,w] = (ord(self.text[w]), self.fg_colour , self.bg_colour)
             else:
-                temp_console.tiles_rgb[0,w] = (ord(' '), (255,255,255), self.bg_colour)
+                temp_console.tiles_rgb[0,w] = (ord(' '), self.fg_colour , self.bg_colour)
 
         if self.selected == True:
             if self.blink == True:
-                temp_console.tiles_rgb[0,len(self.text)] = (9488, (255,255,255), self.bg_colour)
+                temp_console.tiles_rgb[0,len(self.text)] = (9488, self.fg_colour , self.bg_colour)
 
         temp_console.blit(console, self.x, self.y)
 
@@ -185,6 +186,7 @@ class CheckedInput(Input):
         elif self.input_correct == True:
             #Completion stuff that we need one render loop after completion before we trigger
             self.bg_colour = self.completion_colour
+            self.fg_colour = (0,0,0)
             self.completion_effect.start(HorizontalWipeDirection.RIGHT)
             self.completion_effect.in_effect = True
             self.completion_effect.set_tiles(console.tiles_rgb[self.x: self.x+self.width, self.y: self.y+self.height])
