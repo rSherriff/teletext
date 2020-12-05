@@ -39,6 +39,9 @@ class PageManager(Section):
         self.pages['304']=Page('images/304.xp')
         self.pages['305']=Page('images/305.xp')
         self.pages['310']=Page('images/310.xp')
+        self.pages['311']=Page('images/311.xp')
+        self.pages['312']=Page('images/312.xp')
+        self.pages['313']=Page('images/313.xp')
         self.pages['320']=Page('images/320.xp')
         self.pages['330']=Page('images/330.xp')
 
