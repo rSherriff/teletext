@@ -43,7 +43,11 @@ class PageManager(Section):
         self.pages['330']=Page('images/330.xp')
 
         self.pages['401']=Page('images/tvMain.xp')
-        self.pages['411']=Page('images/radioMain.xp')
+        self.pages['402']=Page('images/402.xp')
+        self.pages['403']=Page('images/403.xp')
+        self.pages['404']=Page('images/404.xp')
+        self.pages['405']=Page('images/405.xp')
+        self.pages['406']=Page('images/406.xp')
         self.pages['501']=Page('images/letters.xp')
         self.pages['601']=Page('images/judyProgram.xp')
         
