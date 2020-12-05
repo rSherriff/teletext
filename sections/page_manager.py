@@ -53,7 +53,7 @@ class PageManager(Section):
         
         self.active_page_key = '100'
         self.active_page = self.pages[self.active_page_key]
-
+        self.page_change_speed = 250
         self.searching_for_page_progress = 100
 
         self.tiles = self.active_page.tiles
@@ -77,12 +77,12 @@ class PageManager(Section):
 
     def update(self):
         if self.state == PageManagerState.SEARCHING_FOR_PAGE:
-            if str(self.searching_for_page_progress) == self.active_page_key:
+            if self.searching_for_page_progress >= int(self.active_page_key):
                 self.state = PageManagerState.DISPLAYING_PAGE
                 self.active_page = self.pages[self.active_page_key]
                 self.tiles = self.active_page.tiles
                 playsound("sounds/arrive_at_page.wav", False)
-            self.searching_for_page_progress += 1
+            self.searching_for_page_progress += max(int(int(self.active_page_key) / self.page_change_speed), 1)
 
     def change_page(self, page : str):
         if page in self.pages:
