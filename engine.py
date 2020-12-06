@@ -60,10 +60,10 @@ class Engine:
         self.completion_sections = list()
         self.completion_sections.append(CompleteSection(self, 0,0, screen_width + remote_width,screen_height + answer_panel_height))
 
-        self.q1_tooltip = Poster(self,20,16, 28, 10, "images/questionOnePoster.xp")
+        self.q1_tooltip = Poster(self,20,15, 28, 11, "images/questionOnePoster.xp")
         self.q2_tooltip = Poster(self,4,18, 28, 8, "images/questionFourPoster.xp")
         self.q3_tooltip = Poster(self,4,20, 27, 11, "images/questionTwoPoster.xp")
-        self.q4_tooltip = Poster(self,29,19, 24, 7, "images/questionThreePoster.xp")
+        self.q4_tooltip = Poster(self,33,19, 22, 7, "images/questionThreePoster.xp")
         self.q5_tooltip = Poster(self,29,18, 28, 13, "images/questionFivePoster.xp")
 
         self.tooltips = {}
