@@ -56,7 +56,7 @@ class PageManager(Section):
         
         self.active_page_key = '100'
         self.active_page = self.pages[self.active_page_key]
-        self.page_change_speed = 250
+        self.page_change_speed = 500
         self.searching_for_page_progress = 100
 
         self.tiles = self.active_page.tiles
