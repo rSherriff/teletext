@@ -92,8 +92,9 @@ class Engine:
         for section in self.get_active_sections():
             section.render(root_console)
 
-        for tooltip in self.tooltips.values():
-            tooltip.render(root_console)
+        if self.state == GameState.IN_GAME:
+            for tooltip in self.tooltips.values():
+                tooltip.render(root_console)
 
         if self.full_screen_effect.in_effect == True:
             self.full_screen_effect.render(root_console)
