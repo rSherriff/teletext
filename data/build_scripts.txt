@@ -1,0 +1,1 @@
+pyinstaller --add-data '.\ceefax_teletext_6x10.png;.' --add-data '.\images\*;images' --add-data '.\sounds\*;sounds' -n 'Telusfax' main.py
