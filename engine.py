@@ -20,6 +20,7 @@ from sections.page_manager import PageManager
 from sections.poster import Poster
 from sections.remote import Remote
 
+from delta_time import DeltaTime
 
 from application_path import get_app_path
 
@@ -39,6 +40,8 @@ class Engine:
         remote_height = 24
 
         answer_panel_height = 11
+
+        self.delta_time = DeltaTime()
 
         self.event_handler: EventHandler = MainGameEventHandler(self)
         self.mouse_location = (0, 0)
@@ -107,6 +110,8 @@ class Engine:
         for section in self.get_active_sections():
             section.update()
 
+        self.delta_time.update_delta_time()
+
     def handle_events(self,context: tcod.context.Context):
         self.event_handler.handle_events(context, discard_events=self.full_screen_effect.in_effect)
 
@@ -145,4 +150,7 @@ class Engine:
 
     def hide_tooltip(self, key):
         self.tooltips[key].invisible = True
+
+    def get_delta_time(self):
+        return self.delta_time.get_delta_time()
         

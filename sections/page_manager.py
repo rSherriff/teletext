@@ -86,7 +86,7 @@ class PageManager(Section):
                 self.active_page = self.pages[self.active_page_key]
                 self.tiles = self.active_page.tiles
                 playsound(get_app_path() + "/sounds/arrive_at_page.wav", False)
-            self.searching_for_page_progress += max(int(int(self.active_page_key) / self.page_change_speed), 1)
+            self.searching_for_page_progress += max((int(self.active_page_key) / self.page_change_speed) * self.engine.get_delta_time(), 1)
 
     def change_page(self, page : str):
         if page in self.pages:
