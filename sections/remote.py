@@ -9,8 +9,9 @@ from ui.remoteUI import RemoteUI
 from enum import auto, Enum
 from threading import Timer
 from playsound import playsound
+from application_path import get_app_path
 
-remote_xp_file = 'images/remote.xp'
+remote_xp_file = get_app_path() + '/images/remote.xp'
 num_digits = 3
 
 class RemoteErrors(Enum):
@@ -67,7 +68,7 @@ class Remote(Section):
             self.num_digits = 3
             self.selected_number[2] = number
 
-        playsound("sounds/remote_button_press.wav", False)
+        playsound(get_app_path() + "/sounds/remote_button_press.wav", False)
 
     def clear(self):
         for i in range(0, num_digits):
@@ -76,7 +77,7 @@ class Remote(Section):
         self.num_digits = 0
         self.selected_number = [0,0,0]
 
-        playsound("sounds/remote_button_press.wav", False)
+        playsound(get_app_path() + "/sounds/remote_button_press.wav", False)
 
     def delete_number(self):
         if self.num_digits == 1:
@@ -88,7 +89,7 @@ class Remote(Section):
             self.num_digits = 2
             self.selected_number[2] = 0
 
-        playsound("sounds/remote_button_press.wav", False)
+        playsound(get_app_path() + "/sounds/remote_button_press.wav", False)
 
     def clear_error(self):
         self.remote_error = RemoteErrors.NONE
@@ -96,7 +97,7 @@ class Remote(Section):
     def page_not_found(self):
         self.remote_error = RemoteErrors.PAGE_NOT_FOUND
 
-        playsound("sounds/page_not_found.wav", False)
+        playsound(get_app_path() + "/sounds/page_not_found.wav", False)
 
     def activate(self):
         if self.num_digits == 3:

@@ -6,8 +6,9 @@ import gzip
 import tile_types
 from ui.completeUI import CompleteUI
 import os.path
+from application_path import get_app_path
 
-completion_panel_xp_file = 'images/completePanel'
+completion_panel_xp_file = get_app_path() + '/images/completePanel'
 
 class CompleteSection(Section):
     def __init__(self, engine, x,y,width, height):

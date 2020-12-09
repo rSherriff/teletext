@@ -21,6 +21,9 @@ from sections.poster import Poster
 from sections.remote import Remote
 
 
+from application_path import get_app_path
+
+
 class GameState(Enum):
     MENU = auto()
     IN_GAME = auto()
@@ -60,11 +63,11 @@ class Engine:
         self.completion_sections = list()
         self.completion_sections.append(CompleteSection(self, 0,0, screen_width + remote_width,screen_height + answer_panel_height))
 
-        self.q1_tooltip = Poster(self,20,15, 28, 11, "images/questionOnePoster.xp")
-        self.q2_tooltip = Poster(self,4,18, 28, 8, "images/questionFourPoster.xp")
-        self.q3_tooltip = Poster(self,4,20, 27, 11, "images/questionTwoPoster.xp")
-        self.q4_tooltip = Poster(self,33,19, 22, 7, "images/questionThreePoster.xp")
-        self.q5_tooltip = Poster(self,29,18, 28, 13, "images/questionFivePoster.xp")
+        self.q1_tooltip = Poster(self,20,15, 28, 11,  get_app_path() +"/images/questionOnePoster.xp")
+        self.q2_tooltip = Poster(self,4,18, 28, 8, get_app_path() +"/images/questionFourPoster.xp")
+        self.q3_tooltip = Poster(self,4,20, 27, 11, get_app_path() +"/images/questionTwoPoster.xp")
+        self.q4_tooltip = Poster(self,33,19, 22, 7, get_app_path() +"/images/questionThreePoster.xp")
+        self.q5_tooltip = Poster(self,29,18, 28, 13, get_app_path() +"/images/questionFivePoster.xp")
 
         self.tooltips = {}
         self.tooltips['q1'] = (self.q1_tooltip)
@@ -127,12 +130,12 @@ class Engine:
         self.full_screen_effect.start()
       
     def correct_answer_given(self, question: str):
-        playsound("sounds/correct_answer.wav", False)
+        playsound(get_app_path() +"/sounds/correct_answer.wav", False)
         self.answer_section.answer_correct(question)
         self.completion_criteria[question] = True
         if all(i == True for i in self.completion_criteria.values()):
             self.full_screen_effect.lifespan = 200
-            playsound("sounds/completion_music.wav", False)
+            playsound(get_app_path() + "/sounds/completion_music.wav", False)
             Timer(2, self.complete_game).start()
             
 

@@ -4,6 +4,7 @@ from datetime import datetime
 from enum import auto, Enum
 from sections.section import Section
 from playsound import playsound
+from application_path import get_app_path
 
 class PageManagerState(Enum):
     DISPLAYING_PAGE = auto()
@@ -17,42 +18,42 @@ class PageManager(Section):
 
         self.pages = {}
 
-        self.pages['100']=Page('images/main.xp')
-        self.pages['101']=Page('images/newsMain.xp')
-        self.pages['102']=Page('images/102.xp')
-        self.pages['103']=Page('images/103.xp')
-        self.pages['104']=Page('images/104.xp')
-        self.pages['105']=Page('images/105.xp')
-        self.pages['106']=Page('images/106.xp')
-        self.pages['107']=Page('images/107.xp')
-        self.pages['115']=Page('images/weatherMain.xp')
-        self.pages['116']=Page('images/weatherMap.xp')
-        self.pages['120']=Page('images/120.xp')
+        self.pages['100']=Page('/images/main.xp')
+        self.pages['101']=Page('/images/newsMain.xp')
+        self.pages['102']=Page('/images/102.xp')
+        self.pages['103']=Page('/images/103.xp')
+        self.pages['104']=Page('/images/104.xp')
+        self.pages['105']=Page('/images/105.xp')
+        self.pages['106']=Page('/images/106.xp')
+        self.pages['107']=Page('/images/107.xp')
+        self.pages['115']=Page('/images/weatherMain.xp')
+        self.pages['116']=Page('/images/weatherMap.xp')
+        self.pages['120']=Page('/images/120.xp')
 
-        self.pages['201']=Page('images/sportsMain.xp')
-        self.pages['202']=Page('images/202.xp')
-        self.pages['203']=Page('images/203.xp')
-        self.pages['204']=Page('images/204.xp')
+        self.pages['201']=Page('/images/sportsMain.xp')
+        self.pages['202']=Page('/images/202.xp')
+        self.pages['203']=Page('/images/203.xp')
+        self.pages['204']=Page('/images/204.xp')
 
-        self.pages['301']=Page('images/musicMain.xp')
-        self.pages['302']=Page('images/302.xp')
-        self.pages['303']=Page('images/303.xp')
-        self.pages['304']=Page('images/304.xp')
-        self.pages['310']=Page('images/310.xp')
-        self.pages['311']=Page('images/311.xp')
-        self.pages['312']=Page('images/312.xp')
-        self.pages['313']=Page('images/313.xp')
-        self.pages['320']=Page('images/320.xp')
-        self.pages['330']=Page('images/330.xp')
+        self.pages['301']=Page('/images/musicMain.xp')
+        self.pages['302']=Page('/images/302.xp')
+        self.pages['303']=Page('/images/303.xp')
+        self.pages['304']=Page('/images/304.xp')
+        self.pages['310']=Page('/images/310.xp')
+        self.pages['311']=Page('/images/311.xp')
+        self.pages['312']=Page('/images/312.xp')
+        self.pages['313']=Page('/images/313.xp')
+        self.pages['320']=Page('/images/320.xp')
+        self.pages['330']=Page('/images/330.xp')
 
-        self.pages['401']=Page('images/tvMain.xp')
-        self.pages['402']=Page('images/402.xp')
-        self.pages['403']=Page('images/403.xp')
-        self.pages['404']=Page('images/404.xp')
-        self.pages['405']=Page('images/405.xp')
-        self.pages['406']=Page('images/406.xp')
-        self.pages['501']=Page('images/letters.xp')
-        self.pages['601']=Page('images/gangway.xp')
+        self.pages['401']=Page('/images/tvMain.xp')
+        self.pages['402']=Page('/images/402.xp')
+        self.pages['403']=Page('/images/403.xp')
+        self.pages['404']=Page('/images/404.xp')
+        self.pages['405']=Page('/images/405.xp')
+        self.pages['406']=Page('/images/406.xp')
+        self.pages['501']=Page('/images/letters.xp')
+        self.pages['601']=Page('/images/gangway.xp')
         
         self.active_page_key = '100'
         self.active_page = self.pages[self.active_page_key]
@@ -84,7 +85,7 @@ class PageManager(Section):
                 self.state = PageManagerState.DISPLAYING_PAGE
                 self.active_page = self.pages[self.active_page_key]
                 self.tiles = self.active_page.tiles
-                playsound("sounds/arrive_at_page.wav", False)
+                playsound(get_app_path() + "/sounds/arrive_at_page.wav", False)
             self.searching_for_page_progress += max(int(int(self.active_page_key) / self.page_change_speed), 1)
 
     def change_page(self, page : str):
@@ -92,7 +93,7 @@ class PageManager(Section):
             self.active_page_key = page
             self.state = PageManagerState.SEARCHING_FOR_PAGE
             self.searching_for_page_progress = 100
-            playsound("sounds/search.wav", False)
+            playsound(get_app_path() + "/sounds/search.wav", False)
 
     def does_page_exist(self, page : str):
         return page in self.pages

@@ -7,13 +7,17 @@ import tcod
 from engine import Engine
 from tcod.sdl import Window
 
+from application_path import get_app_path
+
+
+
 
 def main() -> None:
     screen_width = 64
     screen_height = 35
 
     tileset = tcod.tileset.load_tilesheet(
-        "./ceefax_teletext_6x10.png", 16, 16, tcod.tileset.CHARMAP_CP437
+        get_app_path() + "/ceefax_teletext_6x10.png", 16, 16, tcod.tileset.CHARMAP_CP437
     )
 
     with tcod.context.new_terminal(

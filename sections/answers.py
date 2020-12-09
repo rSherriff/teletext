@@ -7,8 +7,9 @@ import tile_types
 from ui.answerUI import AnswersUI
 
 from effects.horizontal_wipe_effect import HorizontalWipeEffect, HorizontalWipeDirection
+from application_path import get_app_path
 
-answer_panel_xp_file = 'images/answerPanel.xp'
+answer_panel_xp_file =  get_app_path() + '/images/answerPanel.xp'
 
 class Answers(Section):
     def __init__(self, engine, x,y,width, height):

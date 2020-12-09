@@ -7,3 +7,5 @@ sections/__pycache__/*
 *.pyc
 build/*
 *.spec
+
+dist/*

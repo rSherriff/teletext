@@ -6,8 +6,9 @@ import gzip
 import tile_types
 from ui.menuUI import MenuUI
 import os.path
+from application_path import get_app_path
 
-menu_panel_xp_file = 'images/menuPanel'
+menu_panel_xp_file = get_app_path() + '/images/menuPanel'
 
 
 class Menu(Section):
