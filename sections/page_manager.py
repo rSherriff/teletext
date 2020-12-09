@@ -57,7 +57,7 @@ class PageManager(Section):
         
         self.active_page_key = '100'
         self.active_page = self.pages[self.active_page_key]
-        self.page_change_speed = 500
+        self.page_change_speed = 200
         self.searching_for_page_progress = 100
 
         self.tiles = self.active_page.tiles
@@ -73,7 +73,7 @@ class PageManager(Section):
         if self.state == PageManagerState.DISPLAYING_PAGE:
             console.print(self.x + 17, 0, self.active_page_key, fg=(255,255,255), bg=(0,0,0))
         elif self.state == PageManagerState.SEARCHING_FOR_PAGE:
-            console.print(self.x + 17, 0, str(self.searching_for_page_progress), fg=(255,255,255), bg=(0,0,0))
+            console.print(self.x + 17, 0, str(int(self.searching_for_page_progress)), fg=(255,255,255), bg=(0,0,0))
 
         now = datetime.now()
         console.print(self.x + 21, 0, now.strftime("%a %d %b"), fg=(255,255,255), bg=(0,0,0))
@@ -86,7 +86,7 @@ class PageManager(Section):
                 self.active_page = self.pages[self.active_page_key]
                 self.tiles = self.active_page.tiles
                 playsound(get_app_path() + "/sounds/arrive_at_page.wav", False)
-            self.searching_for_page_progress += max((int(self.active_page_key) / self.page_change_speed) * self.engine.get_delta_time(), 1)
+            self.searching_for_page_progress += max(self.page_change_speed * self.engine.get_delta_time(), 1)
 
     def change_page(self, page : str):
         if page in self.pages:
