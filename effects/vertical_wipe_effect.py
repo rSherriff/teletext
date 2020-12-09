@@ -11,6 +11,7 @@ class VerticalWipeEffect(Effect):
     def __init__(self, engine, x, y, width, height):
         super().__init__(engine,x,y,width,height)
         self.current_wipe_height = 0
+        self.speed = 54
         
     def start(self, direction: VerticalWipeDirection):
         super().start()
@@ -22,9 +23,9 @@ class VerticalWipeEffect(Effect):
             self.stop()
         
         if(self.direction == VerticalWipeDirection.DOWN):
-            self.current_wipe_height += 0.7
+            self.current_wipe_height += self.speed * self.engine.get_delta_time()
         elif(self.direction == VerticalWipeDirection.UP):
-            self.current_wipe_height -= 0.7
+            self.current_wipe_height -= self.speed * self.engine.get_delta_time()
 
         temp_console = Console(width=self.width, height=self.height, order="F")
 
