@@ -68,6 +68,7 @@ class PageManager(Section):
         self.tiles = self.active_page.tiles
         self.num_digits = 0
         self.selected_number = [0,0,0]
+        self.remote_error = RemoteErrors.NONE
 
     def render(self, console):
         super().render(console)
@@ -81,8 +82,8 @@ class PageManager(Section):
         if self.num_digits > 2:
             console.print(self.x + 4, 0, str(self.selected_number[2]), fg=(255,255,255), bg=(0,0,0))
 
-        #if self.remote_error is RemoteErrors.PAGE_NOT_FOUND:
-            #console.print(self.x + self.error_message_pos[0], self.y +  self.error_message_pos[1], 'Page not found', fg=(255,0,0), bg=(0,0,0))
+        if self.remote_error is RemoteErrors.PAGE_NOT_FOUND:
+            console.print(self.x, self.y, 'NO PAGE', fg=(255,0,0), bg=(0,0,0))
 
         console.print(self.x + 7, 0, 'TELUSFAX', fg=(255,255,255), bg=(0,0,0))
 
