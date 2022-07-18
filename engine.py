@@ -61,10 +61,10 @@ class Engine:
         self.game_sections = list()
         self.game_sections.append(self.page_manager)
         self.game_sections.append(self.remote_section)
-        self.game_sections.append(self.answer_section)
+        #self.game_sections.append(self.answer_section)
 
         self.completion_sections = list()
-        self.completion_sections.append(CompleteSection(self, 0,0, screen_width + remote_width,screen_height + answer_panel_height))
+        #self.completion_sections.append(CompleteSection(self, 0,0, screen_width + remote_width,screen_height + answer_panel_height))
 
         self.q1_tooltip = Poster(self,20,15, 28, 11,  get_app_path() +"/images/questionOnePoster.xp")
         self.q2_tooltip = Poster(self,4,18, 28, 8, get_app_path() +"/images/questionFourPoster.xp")
@@ -87,7 +87,7 @@ class Engine:
         self.completion_criteria['q5'] = False
         self.completion_criteria['q6'] = False
 
-        self.state = GameState.MENU
+        self.state = GameState.IN_GAME
 
 
     def render(self, root_console: Console) -> None:
@@ -136,12 +136,12 @@ class Engine:
         self.full_screen_effect.start()
       
     def correct_answer_given(self, question: str):
-        playsound(get_app_path() +"/sounds/correct_answer.wav", False)
+        #playsound(get_app_path() +"/sounds/correct_answer.wav", False)
         self.answer_section.answer_correct(question)
         self.completion_criteria[question] = True
         if all(i == True for i in self.completion_criteria.values()):
             self.full_screen_effect.lifespan = 200
-            playsound(get_app_path() + "/sounds/completion_music.wav", False)
+            #playsound(get_app_path() + "/sounds/completion_music.wav", False)
             Timer(2, self.complete_game).start()
             
 

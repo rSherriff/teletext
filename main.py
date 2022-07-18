@@ -5,7 +5,7 @@ import time
 import tcod
 
 from engine import Engine
-from tcod.sdl import Window
+
 
 from application_path import get_app_path
 
@@ -14,21 +14,22 @@ from application_path import get_app_path
 
 def main() -> None:
     screen_width = 64
-    screen_height = 35
+    screen_height = 24
 
     tileset = tcod.tileset.load_tilesheet(
         get_app_path() + "/ceefax_teletext_6x10.png", 16, 16, tcod.tileset.CHARMAP_CP437
     )
 
     with tcod.context.new_terminal(
-        screen_width * 2,
-        screen_height * 2,
+        screen_width * 3,
+        screen_height * 3,
         tileset=tileset,
         title="Teletext",
         vsync=True,
-        sdl_window_flags = tcod.context.SDL_WINDOW_BORDERLESS
+        sdl_window_flags = tcod.context.SDL_WINDOW_RESIZABLE
     ) as root_context:
 
+        tcod.lib.SDL_SetHint(b"SDL_RENDER_SCALE_QUALITY", b"0")
         root_console = tcod.Console(screen_width, screen_height, order="F")
         engine = Engine()
 

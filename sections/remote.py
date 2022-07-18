@@ -68,7 +68,10 @@ class Remote(Section):
             self.num_digits = 3
             self.selected_number[2] = number
 
-        playsound(get_app_path() + "/sounds/remote_button_press.wav", False)
+        if self.num_digits == 3:
+            self.activate()
+
+        #playsound(get_app_path() + "/sounds/remote_button_press.wav", False)
 
     def clear(self):
         for i in range(0, num_digits):
@@ -76,8 +79,6 @@ class Remote(Section):
 
         self.num_digits = 0
         self.selected_number = [0,0,0]
-
-        playsound(get_app_path() + "/sounds/remote_button_press.wav", False)
 
     def delete_number(self):
         if self.num_digits == 1:
@@ -96,7 +97,6 @@ class Remote(Section):
 
     def page_not_found(self):
         self.remote_error = RemoteErrors.PAGE_NOT_FOUND
-
         playsound(get_app_path() + "/sounds/page_not_found.wav", False)
 
     def activate(self):
@@ -104,14 +104,12 @@ class Remote(Section):
             page = str((self.selected_number[0] * 100) + (self.selected_number[1] * 10) + self.selected_number[2])
             if self.engine.page_manager.does_page_exist(page):
                 self.engine.page_manager.change_page(page)
-                self.clear()
+                t = Timer(1, self.clear).start()
             else:
                 self.clear()
                 for i in range(0,4):
                     if i % 2 == 1:
-                        t = Timer(i/2, self.clear_error)
-                        t.start()
+                        t = Timer(i/2, self.clear_error).start()
                     else:
-                        t = Timer(i/2, self.page_not_found)
-                        t.start()
+                        t = Timer(i/2, self.page_not_found).start()
                         pass
