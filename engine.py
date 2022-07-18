@@ -20,6 +20,7 @@ from sections.page_manager import PageManager
 from sections.poster import Poster
 from sections.remote import Remote
 
+
 from delta_time import DeltaTime
 
 from application_path import get_app_path
@@ -60,7 +61,7 @@ class Engine:
 
         self.game_sections = list()
         self.game_sections.append(self.page_manager)
-        self.game_sections.append(self.remote_section)
+        #self.game_sections.append(self.remote_section)
         #self.game_sections.append(self.answer_section)
 
         self.completion_sections = list()

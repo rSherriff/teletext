@@ -31,19 +31,19 @@ class EnterRemoteNumber(Action):
         self.number = number
 
     def perform(self) -> None:
-        self.engine.remote_section.add_number(self.number)
+        self.engine.page_manager.add_number(self.number)
 
 class ClearRemote(Action):
     def perform(self) -> None:
-        self.engine.remote_section.clear()
+        self.engine.page_manager.clear()
 
 class ActivateRemote(Action):
     def perform(self) -> None:
-        self.engine.remote_section.activate()
+        self.engine.page_manager.activate()
 
 class DeleteRemoteNumber(Action):
     def perform(self) -> None:
-        self.engine.remote_section.delete_number()
+        self.engine.page_manager.delete_number()
 
 class CloseMenu(Action):
     def perform(self) -> None:

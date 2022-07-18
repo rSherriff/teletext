@@ -13,7 +13,7 @@ from application_path import get_app_path
 
 
 def main() -> None:
-    screen_width = 64
+    screen_width = 40
     screen_height = 24
 
     tileset = tcod.tileset.load_tilesheet(
