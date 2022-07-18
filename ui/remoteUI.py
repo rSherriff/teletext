@@ -73,6 +73,5 @@ class RemoteUI(UI):
     def keydown(self, event: tcod.event.KeyDown):
         super().keydown(event)
         key = event.sym
-        if key == tcod.event.K_ESCAPE:
-            OpenMenu(self.section.engine).perform()
+        
         
