@@ -105,6 +105,11 @@ class Engine:
         else:
             self.full_screen_effect.set_tiles(root_console.tiles_rgb)
 
+        root_console.print(0, 24, "Find the presenters hinted on the sheet!", (255,255,255), (0,0,0))
+        root_console.print(4, 25, " Return to the index - page 100", (255,255,255), (0,0,0))
+        root_console.print(0, 26, "Control with the remote numbers!", (255,255,255), (0,0,0))
+        root_console.print(4, 27, "   https://rsherriff.github.io", (255,255,255), (0,0,0))
+
 
     def update(self):
         """ Engine update tick """

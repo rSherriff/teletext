@@ -14,7 +14,7 @@ from application_path import get_app_path
 
 def main() -> None:
     screen_width = 40
-    screen_height = 24
+    screen_height = 28
 
     tileset = tcod.tileset.load_tilesheet(
         get_app_path() + "/ceefax_teletext_6x10.png", 16, 16, tcod.tileset.CHARMAP_CP437
@@ -26,7 +26,7 @@ def main() -> None:
         tileset=tileset,
         title="Teletext",
         vsync=True,
-        sdl_window_flags = tcod.context.SDL_WINDOW_RESIZABLE
+        sdl_window_flags = tcod.context.SDL_WINDOW_FULLSCREEN
     ) as root_context:
 
         tcod.lib.SDL_SetHint(b"SDL_RENDER_SCALE_QUALITY", b"0")
