@@ -106,7 +106,9 @@ class PageManager(Section):
             self.searching_for_page_progress += max(self.page_change_speed * self.engine.get_delta_time(), 1)
 
     def change_page(self, page : str):
-        if page in self.pages:
+        if self.state == PageManagerState.SEARCHING_FOR_PAGE:
+            return
+        elif page in self.pages:
             self.active_page_key = page
             self.state = PageManagerState.SEARCHING_FOR_PAGE
             self.searching_for_page_progress = 100
@@ -116,6 +118,9 @@ class PageManager(Section):
         return page in self.pages
 
     def add_number(self, number : int):
+        if self.state == PageManagerState.SEARCHING_FOR_PAGE:
+            return
+            
         if self.num_digits == 0:
             if number != 0:
                 self.num_digits = 1
